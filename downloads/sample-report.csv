@@ -1,0 +1,11 @@
+User Name,Email,Product,Product Family,License Type,Start Date,End Date,Usage Minutes,Status
+Alice Wang,alice@example.com,AutoCAD,Autodesk,Enterprise,2025-03-01,2025-03-31,4800,Active
+Bob Li,bob@example.com,Revit,Autodesk,Enterprise,2025-03-01,2025-03-31,3600,Active
+Charlie Chen,charlie@example.com,Fusion 360,Autodesk,Enterprise,2025-03-01,2025-03-31,7200,Active
+Alice Wang,alice@example.com,Revit,Autodesk,Enterprise,2025-03-01,2025-03-31,2400,Active
+Diana Zhu,diana@example.com,AutoCAD,Autodesk,Enterprise,2025-03-01,2025-03-31,5400,Active
+Alice Wang,alice@example.com,Fusion 360,Autodesk,Enterprise,2025-03-01,2025-03-31,1800,Active
+Bob Li,bob@example.com,AutoCAD,Autodesk,Enterprise,2025-03-01,2025-03-31,6000,Active
+Eva Zhang,eva@example.com,3ds Max,Autodesk,Enterprise,2025-03-01,2025-03-31,2400,Active
+Charlie Chen,charlie@example.com,Maya,Autodesk,Enterprise,2025-03-01,2025-03-31,3600,Active
+Diana Zhu,diana@example.com,Revit,Autodesk,Enterprise,2025-03-18,2025-03-31,1200,Active
