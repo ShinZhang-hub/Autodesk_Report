@@ -228,10 +228,6 @@ tr:hover td{background:#f1f5f9}
   Report Date: <select id="reportDate" onchange="loadDate(this.value)">
     ${availableDates.map(d => `<option value="${d}">${d}</option>`).join('')}
   </select>
-  <button class="btn btn-outline" onclick="document.getElementById('folderInput').click()">📂 加载数据文件夹</button>
-  <button class="btn btn-outline" onclick="document.getElementById('fileInput').click()">📄 选择 JSON</button>
-  <input id="folderInput" type="file" webkitdirectory multiple style="display:none" onchange="handleFolderInput(event)">
-  <input id="fileInput" type="file" accept=".json" style="display:none" onchange="handleJSONInput(event)">
 </div>
 <div class="summary" id="summaryCards"></div>
 
@@ -626,72 +622,6 @@ function loadDate(dateStr){
 }
 
 function scrollToNote(id){document.getElementById(id||'recalcNote').scrollIntoView({behavior:'smooth'})}
-
-function rebuildDateSelect(selectDate){
-  var dates=Object.keys(ALL_DATA).sort();
-  var sel=document.getElementById('reportDate');
-  var html='';
-  for(var i=0;i<dates.length;i++){
-    html+='<option value="'+dates[i]+'">'+dates[i]+'</option>';
-  }
-  sel.innerHTML=html;
-  if(!selectDate||ALL_DATA[selectDate]===undefined) selectDate=dates[dates.length-1];
-  sel.value=selectDate;
-  loadDate(selectDate);
-}
-
-function addExternalJSON(json){
-  if(!json||!json.reportDate) return false;
-  ALL_DATA[json.reportDate]=json;
-  return true;
-}
-
-function handleJSONInput(ev){
-  var file=ev.target.files&&ev.target.files[0];
-  if(!file) return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var json=JSON.parse(e.target.result);
-      if(addExternalJSON(json)){
-        rebuildDateSelect(json.reportDate);
-      }else{
-        alert('JSON 缺少 reportDate 字段，无法加载');
-      }
-    }catch(err){
-      alert('JSON 解析失败: '+err.message);
-    }
-  };
-  reader.readAsText(file);
-  ev.target.value='';
-}
-
-function handleFolderInput(ev){
-  var files=ev.target.files;
-  if(!files||files.length===0) return;
-  var pending=files.length, latest=null;
-  function done(){
-    if(--pending>0) return;
-    var dates=Object.keys(ALL_DATA).sort();
-    rebuildDateSelect(latest||dates[dates.length-1]);
-  }
-  for(var i=0;i<files.length;i++){
-    (function(file){
-      var m=file.name.match(/autodesk_report_(\\d{4}-\\d{2}-\\d{2})\\.json$/);
-      if(!m){ done(); return; }
-      var r=new FileReader();
-      r.onload=function(e){
-        try{
-          var json=JSON.parse(e.target.result);
-          if(json.reportDate&&addExternalJSON(json)&&(!latest||json.reportDate>latest)) latest=json.reportDate;
-        }catch(err){}
-        done();
-      };
-      r.readAsText(file);
-    })(files[i]);
-  }
-  ev.target.value='';
-}
 
 loadDate('${availableDates[availableDates.length-1] || team.reportDate}');
 </script>
