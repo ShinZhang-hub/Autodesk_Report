@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodesk Report for Exact</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1e293b;padding:32px}
+.container{max-width:1440px;margin:0 auto}
+h1{font-size:22px;font-weight:700;color:#0f172a;letter-spacing:-.3px}
+.meta{color:#64748b;margin:8px 0 32px;font-size:13px;display:flex;align-items:center;gap:8px}
+.meta select{padding:3px 8px;font-size:12px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;color:#1e293b;font-weight:500;cursor:pointer}
+.meta select:focus{outline:2px solid #6366f1;border-color:transparent}
+.summary{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.summary-card{background:#fff;border-radius:10px;padding:20px 28px;box-shadow:0 1px 2px rgba(0,0,0,.06);min-width:140px;border:1px solid #f1f5f9}
+.summary-card .label{font-size:11px;color:#94a3b8;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.summary-card .value{font-size:28px;font-weight:700;color:#0f172a;line-height:1.2}
+section{margin-bottom:36px}
+h2{font-size:16px;font-weight:600;color:#0f172a;margin-bottom:14px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #f1f5f9}
+table{width:100%;border-collapse:collapse;min-width:1200px}
+th{background:#f8fafc;color:#475569;padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;user-select:none;white-space:nowrap;position:relative;border-bottom:2px solid #e2e8f0}
+th .sort-icon{font-size:9px;margin-left:4px;opacity:.25}
+th.sorted-asc .sort-icon,th.sorted-desc .sort-icon{opacity:1;color:#6366f1}
+.filter-row th{background:#fff;padding:6px 8px;cursor:default;border-bottom:1px solid #e2e8f0}
+.filter-row input,.filter-row select{width:100%;padding:5px 6px;font-size:11px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;box-sizing:border-box;color:#1e293b}
+.filter-row select{cursor:pointer}
+.filter-row input:focus,.filter-row select:focus{outline:2px solid #6366f1;border-color:transparent}
+.filter-row .cmp-row{display:flex;gap:2px}
+.filter-row .cmp-row select{width:44px;flex-shrink:0}
+.filter-row .cmp-row input{flex:1;min-width:0}
+.filter-row .date-row{display:flex;gap:2px}
+.filter-row .date-row select{width:50px;flex-shrink:0;font-size:10px}
+.filter-row .date-row input{flex:1;min-width:0;font-size:11px}
+td{padding:9px 12px;border-bottom:1px solid #f1f5f9;font-size:12px;color:#334155}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fafbfc}
+tr:hover td{background:#f1f5f9}
+.badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.2px}
+.badge-active{background:#d1fae5;color:#065f46}
+.badge-inactive{background:#fef2f2;color:#991b1b}
+.rec-count{font-size:12px;color:#64748b;margin:0 0 10px 4px}
+.rec-count strong{color:#0f172a}
+.flagged-box{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin-bottom:24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.flagged-box h3{font-size:14px;font-weight:600;color:#0f172a;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.flagged-box h3:before{content:'\26A0';font-size:16px}
+.flagged-box .param-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.flagged-box .param-row label{font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.flagged-box .param-row label.avg-label{color:#d97706}
+.flagged-box .param-row label.days-label{color:#6366f1}
+.flagged-box .param-row input{width:68px;padding:5px 8px;font-size:12px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;color:#1e293b;font-weight:500}
+.flagged-box .param-row input:focus{outline:2px solid #6366f1;border-color:transparent}
+.flagged-list{font-size:12px;color:#475569;margin-top:4px}
+.flagged-cards{display:flex;flex-wrap:wrap;gap:8px}
+.flagged-cards .section-title{width:100%;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;margin:6px 0 2px}
+.flagged-card{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;background:#fafbfc;min-width:180px;transition:box-shadow .15s,border-color .15s}
+.flagged-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:#cbd5e1}
+.flagged-card .card-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.flagged-card .card-info{display:flex;flex-direction:column;min-width:0}
+.flagged-card .card-id{font-weight:700;color:#0f172a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.4}
+.flagged-card .card-sub{font-size:11px;color:#94a3b8;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flag-dot-avg{background:#f59e0b}
+.flag-dot-days{background:#6366f1}
+.flag-dot-both{background:linear-gradient(135deg,#f59e0b 50%,#6366f1 50%)}
+.cell-highlight-avg{background:#fef3c7!important;outline:1px solid #f59e0b40;outline-offset:-1px}
+.cell-highlight-days{background:#e0e7ff!important;outline:1px solid #6366f140;outline-offset:-1px}
+.cell-assign-recalc{background:#fef2f2!important;color:#dc2626!important;font-weight:600}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#94a3b8;color:#fff;font-size:10px;font-weight:700;font-style:normal;cursor:help;line-height:1}
+.recalc-note{font-size:11px;color:#64748b;margin-top:8px;padding:8px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;line-height:1.5}
+.recalc-note code{background:#e2e8f0;padding:1px 5px;border-radius:3px;font-size:10px}
+.flagged-row{background:#fef3c7!important}
+.flagged-row:hover{background:#fde68a!important}
+.flagged-row td{background:inherit!important}
+.collapse-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:6px 0;margin-bottom:6px}
+.collapse-toggle .arrow{font-size:10px;color:#94a3b8;transition:transform .2s}
+.collapse-toggle.collapsed .arrow{transform:rotate(-90deg)}
+.collapse-toggle h2{margin:0;padding:0;display:inline}
+.collapse-content{overflow:hidden;transition:max-height .3s ease}
+.collapse-content.collapsed{max-height:0}
+.toolbar{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;transition:all .15s}
+.btn-primary{background:#6366f1;color:#fff}
+.btn-primary:hover{background:#4f46e5}
+.btn-warning{background:#f59e0b;color:#fff}
+.btn-warning:hover{background:#d97706}
+.btn-outline{background:transparent;color:#64748b;border:1px solid #e2e8f0}
+.btn-outline:hover{background:#f8fafc;color:#0f172a}
+.highlight-count{font-size:12px;color:#475569;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Autodesk Report for Exact</h1>
+<div class="meta">
+  Report Date: <select id="reportDate" onchange="loadDate(this.value)">
+    <option value="">-- Select Date --</option>
+  </select>
+</div>
+<div class="summary" id="summaryCards"></div>
+
+<section>
+<div class="flagged-box" id="flaggedBox">
+<h3>Flagged Users</h3>
+<div class="param-row">
+<label class="avg-label">Monthly Avg &lt; <input id="flagMaxAvg" type="number" value="7" onchange="updateFlagged()" oninput="updateFlagged()"></label>
+<label style="font-size:12px;font-weight:700;color:#64748b;gap:4px;display:inline-flex;align-items:center">
+  <select id="flagMode" onchange="updateFlagged()" style="padding:3px 6px;font-size:11px;border:1px solid #e2e8f0;border-radius:4px;background:#fff;color:#1e293b;font-weight:600;cursor:pointer">
+    <option value="AND">AND</option>
+    <option value="OR">OR</option>
+  </select>
+</label>
+<label class="days-label">Days Since Last Access &gt; <input id="flagMinDays" type="number" value="7" onchange="updateFlagged()" oninput="updateFlagged()"></label>
+</div>
+<div id="flaggedList" class="flagged-list"></div>
+</div>
+</section>
+
+<section>
+<div class="collapse-toggle collapsed" id="detailToggle" onclick="toggleDetails()">
+<span class="arrow">&#9660;</span>
+<h2>User Details</h2>
+</div>
+<div class="collapse-content collapsed" id="detailContent">
+<div class="toolbar">
+<button class="btn btn-primary" onclick="clearFilters()">&#10227; Clear All Filters</button>
+<button class="btn btn-warning" onclick="showFlaggedOnly()">&#9878; Show Flagged Only</button>
+</div>
+<div class="rec-count" id="recCount">Loading...</div>
+<div class="table-wrap">
+<table id="teamTable">
+<thead id="tableHead"></thead>
+<tbody id="tableBody"></tbody>
+</table>
+<div class="recalc-note" id="teamNote"><span class="info-icon">i</span> Exact Team &amp; GoGame (2 Maya) - May 2025.</div>
+<div class="recalc-note" id="assignNote" style="display:none"><span class="info-icon">i</span> Assign date &lt; 3mo &mdash; monthly avg recalculated.</div>
+<div class="recalc-note" id="recalcNote" style="display:none"><span class="info-icon">i</span> Recalculated: <code>Days Used &divide; months since assign</code> &mdash; original in parentheses.</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+var DATES = [];
+var COLUMNS = [
+  {key:'name', label:'Name', type:'text'},
+  {key:'email', label:'Email', type:'text'},
+  {key:'teamAlias', label:'Team', type:'text'},
+  {key:'userActivity', label:'Status', type:'text'},
+  {key:'daysInactive', label:'Days Inactive', type:'number'},
+  {key:'daysUsed', label:'Days Used', type:'number'},
+  {key:'monthlyAverage', label:'Monthly Avg', type:'number'},
+  {key:'lastAccessed', label:'Last Access', type:'date'},
+  {key:'assignDate', label:'Assign Date', type:'date'},
+  {key:'product', label:'Product', type:'text'},
+];
+var data = [];
+var REPORT_DATE = '';
+
+function getVal(row,col){
+  var v=row[col.key];
+  if(col.type==='number') return parseFloat(v)||0;
+  if(col.type==='date') return v||'';
+  return v;
+}
+
+function getAdjAvg(row){
+  if(!row.assignDate||!REPORT_DATE) return parseFloat(row.monthlyAverage)||0;
+  var ad=new Date(row.assignDate);
+  var ed=new Date(REPORT_DATE);
+  var months=(ed-ad)/(1000*60*60*24*30);
+  if(months<3&&months>0) return (parseFloat(row.daysUsed)||0)/months;
+  return parseFloat(row.monthlyAverage)||0;
+}
+
+function compare(a,b,col,dir){
+  var va=getVal(a,col), vb=getVal(b,col);
+  if(col.type==='number') return dir*(va-vb);
+  if(col.type==='date'){
+    if(!va&&!vb) return 0;
+    if(!va) return 1;
+    if(!vb) return -1;
+    return dir*(new Date(va)-new Date(vb));
+  }
+  va=String(va).toLowerCase(); vb=String(vb).toLowerCase();
+  if(va<vb) return -dir;
+  if(va>vb) return dir;
+  return 0;
+}
+
+function getFlagInfo(row){
+  var maxAvg=parseFloat(document.getElementById('flagMaxAvg').value)||7;
+  var minDays=parseFloat(document.getElementById('flagMinDays').value)||7;
+  var avg=getAdjAvg(row);
+  var last=row.lastAccessed;
+  var avgFlag=avg<maxAvg;
+  var daysFlag=last?((new Date()-new Date(last))/86400000)>minDays:false;
+  var mode=document.getElementById('flagMode').value;
+  return {avgFlag:avgFlag, daysFlag:daysFlag, flagged:mode==='AND'?(avgFlag&&daysFlag):(avgFlag||daysFlag)};
+}
+
+function updateFlagged(){
+  var flagged=[];
+  for(var fi=0;fi<data.length;fi++){
+    var info=getFlagInfo(data[fi]);
+    if(info.flagged) flagged.push({row:data[fi], info:info});
+  }
+  var list=document.getElementById('flaggedList');
+  if(flagged.length===0){
+    list.innerHTML='<span style="color:#92400e">No users match the current thresholds.</span>';
+  }else{
+    var activeItems=[], inactiveItems=[];
+    for(var fi=0;fi<flagged.length;fi++){
+      var r=flagged[fi].row, info=flagged[fi].info;
+      var emailId=r.email.split('@')[0];
+      var dotCls=info.avgFlag&&info.daysFlag?'flag-dot-both':(info.avgFlag?'flag-dot-avg':'flag-dot-days');
+      if(r.userActivity.toLowerCase()==='active'){
+        activeItems.push({emailId:emailId, name:r.name, email:r.email, dotCls:dotCls});
+      }else{
+        inactiveItems.push({emailId:emailId, name:r.name, email:r.email, dotCls:dotCls});
+      }
+    }
+    var html='<div class="highlight-count" style="margin-bottom:10px">'+flagged.length+' user(s) flagged:</div><div class="flagged-cards">';
+    if(activeItems.length>0){
+      html+='<div class="section-title">Active</div>';
+      for(var ci=0;ci<activeItems.length;ci++){
+        var a=activeItems[ci];
+        html+='<div class="flagged-card" onclick="showUser(&#39;'+esc(a.email)+'&#39;)" style="cursor:pointer"><span class="card-dot '+a.dotCls+'"></span><div class="card-info"><div class="card-id">'+esc(a.emailId)+'</div><div class="card-sub">'+esc(a.name||a.email)+'</div></div></div>';
+      }
+    }
+    if(inactiveItems.length>0){
+      html+='<div class="section-title">Inactive</div>';
+      for(var ci=0;ci<inactiveItems.length;ci++){
+        var b=inactiveItems[ci];
+        html+='<div class="flagged-card" onclick="showUser(&#39;'+esc(b.email)+'&#39;)" style="cursor:pointer"><span class="card-dot '+b.dotCls+'"></span><div class="card-info"><div class="card-id">'+esc(b.emailId)+'</div><div class="card-sub">'+esc(b.name||b.email)+'</div></div></div>';
+      }
+    }
+    html+='</div>';
+    list.innerHTML=html;
+  }
+  applyFiltersAndSort();
+}
+
+function toggleDetails(){
+  var toggle=document.getElementById('detailToggle');
+  var content=document.getElementById('detailContent');
+  var collapsed=toggle.classList.toggle('collapsed');
+  content.classList.toggle('collapsed');
+  if(!collapsed) applyFiltersAndSort();
+}
+
+var sortCol=null, sortDir=1, showFlagged=false;
+
+function applyFiltersAndSort(){
+  var filters=[];
+  COLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('f_'+ci);
+    if(!el) return;
+    if(col.type==='text'){
+      var v=el.value;
+      if(v){
+        filters.push({col:col, test:function(r){return String(getVal(r,col)).toLowerCase()===v.toLowerCase();}});
+      }
+    }else if(col.type==='number'){
+      var opEl=document.getElementById('fop_'+ci);
+      var numEl=el;
+      var op=opEl?opEl.value:'';
+      var num=parseFloat(numEl.value);
+      if(op&&!isNaN(num)){
+        filters.push({col:col, test:function(r){
+          var val=getVal(r,col);
+          if(op==='>=') return val>=num;
+          if(op==='<=') return val<=num;
+          if(op==='>') return val>num;
+          if(op==='<') return val<num;
+          if(op==='=') return val===num;
+          return true;
+        }});
+      }
+    }else if(col.type==='date'){
+      var modeEl=document.getElementById('fdm_'+ci);
+      var dateEl=el;
+      var mode=modeEl?modeEl.value:'';
+      var dateVal=dateEl.value;
+      if(mode&&dateVal){
+        var cmp=new Date(dateVal).getTime();
+        filters.push({col:col, test:function(r){
+          var d=getVal(r,col);
+          if(!d) return false;
+          var t=new Date(d).getTime();
+          if(mode==='before') return t<=cmp+86400000;
+          if(mode==='after') return t>=cmp;
+          return true;
+        }});
+      }
+    }
+  });
+  if(showFlagged){
+    var flagInfoMap={};
+    for(var fi=0;fi<data.length;fi++){
+      var info=getFlagInfo(data[fi]);
+      if(info.flagged) flagInfoMap[data[fi]._idx]=true;
+    }
+    filters.push({col:null, test:function(r){return !!flagInfoMap[r._idx];}});
+  }
+  var filtered=data.filter(function(r){return filters.every(function(f){return f.test(r);});});
+  if(sortCol!==null){
+    var col=COLUMNS[sortCol];
+    filtered.sort(function(a,b){return compare(a,b,col,sortDir);});
+  }
+  render(filtered);
+  var visible=document.getElementById('detailContent').classList.contains('collapsed');
+  if(!visible) document.getElementById('recCount').innerHTML='Showing <strong>'+filtered.length+'</strong> records';
+}
+
+function render(rows){
+  var tbody=document.getElementById('tableBody');
+  var flagInfoMap={};
+  for(var fi=0;fi<data.length;fi++){
+    var info=getFlagInfo(data[fi]);
+    if(info.flagged) flagInfoMap[data[fi]._idx]=info;
+  }
+  var html='';
+  var endDate=REPORT_DATE?new Date(REPORT_DATE):new Date();
+  for(var ri=0;ri<rows.length;ri++){
+    var r=rows[ri];
+    var act=r.userActivity.toLowerCase()==='active'?'Active':'Inactive';
+    var ab=act==='Active'?'<span class="badge badge-active">Active</span>':'<span class="badge badge-inactive">Inactive</span>';
+    var info=flagInfoMap[r._idx];
+    var rowCls=info&&!showFlagged?' class="flagged-row"':'';
+    var avgCell=esc(r.monthlyAverage||'0');
+    var daysCell=esc(r.lastAccessed||'-');
+    var assignCell=esc((r.assignDate||'').split('T')[0]||'-');
+    if(r.assignDate){
+      var ad=new Date(r.assignDate);
+      var months=(endDate-ad)/(1000*60*60*24*30);
+      if(months<3&&months>0){
+        var recalcAvg=getAdjAvg(r);
+        avgCell=esc(recalcAvg.toFixed(1))+' ('+esc(r.monthlyAverage||'0')+') <span class="info-icon" onclick="scrollToNote()" style="cursor:pointer">i</span>';
+        assignCell='<span class="cell-assign-recalc">'+esc((r.assignDate||'').split('T')[0])+' <span class="info-icon" onclick="scrollToNote(&#39;assignNote&#39;)" style="cursor:pointer">i</span></span>';
+      }
+    }
+    if(showFlagged&&info){
+      if(info.avgFlag) avgCell='<span class="cell-highlight-avg">'+avgCell+'</span>';
+      if(info.daysFlag) daysCell='<span class="cell-highlight-days">'+daysCell+'</span>';
+    }
+    var teamCell=esc(r.teamAlias);
+    if(r.teamAlias==='Exact Team & GoGame (2 Maya) - May 2025') teamCell=esc('Exact Team - May 2025')+' <span class="info-icon" onclick="scrollToNote(&#39;teamNote&#39;)" style="cursor:pointer">i</span>';
+    html+='<tr'+rowCls+'><td>'+esc(r.name)+'</td><td>'+esc(r.email)+'</td><td>'+teamCell+'</td><td>'+ab+'</td><td>'+esc(r.daysInactive||'-')+'</td><td>'+esc(r.daysUsed||'0')+'</td><td>'+avgCell+'</td><td>'+daysCell+'</td><td>'+assignCell+'</td><td>'+esc(r.product)+'</td></tr>';
+  }
+  tbody.innerHTML=html;
+  var hasRecalc=false;
+  for(var ri=0;ri<rows.length;ri++){
+    var r=rows[ri];
+    if(r.assignDate){
+      var ad=new Date(r.assignDate);
+      if((endDate-ad)/(1000*60*60*24*30)<3) hasRecalc=true;
+    }
+  }
+  var note=document.getElementById('recalcNote');
+  if(note) note.style.display=hasRecalc?'':'none';
+  var aNote=document.getElementById('assignNote');
+  if(aNote) aNote.style.display=hasRecalc?'':'none';
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function buildHeader(){
+  var thead=document.getElementById('tableHead');
+  var h='<tr>';
+  COLUMNS.forEach(function(col,ci){
+    var cls='';
+    if(sortCol===ci) cls=sortDir>0?' sorted-asc':' sorted-desc';
+    var w=[0,4,5,6].indexOf(ci)>=0?' style="width:'+(ci===0?160:ci===6?90:70)+'px"':'';
+    h+='<th class="'+cls+'" onclick="sortBy('+ci+')"'+w+'><span>'+col.label+'</span><span class="sort-icon"> ▲▼</span></th>';
+  });
+  h+='</tr><tr class="filter-row">';
+  COLUMNS.forEach(function(col,ci){
+    if(col.type==='text'){
+      var vals={};
+      for(var i=0;i<data.length;i++){
+        var v=getVal(data[i],col);
+        if(v) vals[v]=true;
+      }
+      var sorted=Object.keys(vals).sort();
+      var opts='<option value="">All</option>';
+      for(var i=0;i<sorted.length;i++){
+        var sv=sorted[i];
+        opts+='<option value="'+esc(sv)+'">'+esc(sv)+'</option>';
+      }
+      h+='<th><select id="f_'+ci+'" onchange="applyFiltersAndSort()">'+opts+'</select></th>';
+    }else if(col.type==='number'){
+      h+='<th><div class="cmp-row"><select id="fop_'+ci+'" onchange="applyFiltersAndSort()"><option value="">-</option><option value=">=">≥</option><option value="<=">≤</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select><input id="f_'+ci+'" type="number" oninput="applyFiltersAndSort()" placeholder="value"></div></th>';
+    }else if(col.type==='date'){
+      h+='<th><div class="date-row"><select id="fdm_'+ci+'" onchange="applyFiltersAndSort()"><option value="">-</option><option value="before">before</option><option value="after">after</option></select><input id="f_'+ci+'" type="text" placeholder="YYYY-MM-DD" oninput="applyFiltersAndSort()"></div></th>';
+    }
+  });
+  h+='</tr>';
+  thead.innerHTML=h;
+}
+
+function showFlaggedOnly(){
+  showFlagged=true;
+  sortCol=null; sortDir=1;
+  clearFilterInputs();
+  applyFiltersAndSort();
+}
+
+function showUser(email){
+  clearFilterInputs();
+  showFlagged=true;
+  var el=document.getElementById('f_1');
+  if(el) el.value=email;
+  var toggle=document.getElementById('detailToggle');
+  var content=document.getElementById('detailContent');
+  if(toggle.classList.contains('collapsed')){
+    toggle.classList.remove('collapsed');
+    content.classList.remove('collapsed');
+  }
+  applyFiltersAndSort();
+}
+
+function clearFilterInputs(){
+  COLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('f_'+ci);
+    if(el){
+      if(el.tagName==='SELECT') el.selectedIndex=0;
+      else el.value='';
+    }
+    var opEl=document.getElementById('fop_'+ci);
+    if(opEl) opEl.selectedIndex=0;
+    var dmEl=document.getElementById('fdm_'+ci);
+    if(dmEl) dmEl.selectedIndex=0;
+  });
+  var ths=document.querySelectorAll('#tableHead th');
+  for(var i=0;i<ths.length;i++) ths[i].className='';
+}
+
+function clearFilters(){
+  showFlagged=false;
+  sortCol=null; sortDir=1;
+  clearFilterInputs();
+  applyFiltersAndSort();
+}
+
+function sortBy(ci){
+  if(sortCol===ci) sortDir*=-1;
+  else{sortCol=ci; sortDir=-1;}
+  applyFiltersAndSort();
+  var ths=document.querySelectorAll('#tableHead th');
+  for(var i=0;i<ths.length;i++){
+    ths[i].className=(i===ci?(sortDir>0?'sorted-asc':'sorted-desc'):'');
+  }
+}
+
+function loadDate(dateStr){
+  if(!dateStr) return;
+  var url = 'Exact_autodesk_report_' + dateStr + '.json';
+  fetch(url).then(function(r){ if(!r.ok) throw new Error('Not found'); return r.json(); }).then(function(json){
+    var users = json.users;
+    data = users.map(function(u,i){
+      return {
+        _idx:i,
+        name:(u.firstName+' '+u.lastName).trim(),
+        email:u.email,
+        teamAlias:u.teamAlias,
+        userActivity:u.userActivity,
+        daysInactive:u.daysInactive||'0',
+        daysUsed:u.daysUsed||'0',
+        monthlyAverage:u.monthlyAverage||'0',
+        lastAccessed:u.lastAccessed||'',
+        assignDate:u.assignDate||'',
+        product:u.product
+      };
+    });
+    REPORT_DATE = dateStr;
+    var productSet = {};
+    var activeCount = 0;
+    for(var i=0;i<users.length;i++){
+      if(users[i].product) productSet[users[i].product]=true;
+      if(users[i].userActivity.toLowerCase()==='active') activeCount++;
+    }
+    document.getElementById('summaryCards').innerHTML =
+      '<div class="summary-card"><div class="label">Records</div><div class="value">'+json.totalRecords+'</div></div>' +
+      '<div class="summary-card"><div class="label">Users</div><div class="value">'+json.uniqueUsers+'</div></div>' +
+      '<div class="summary-card"><div class="label">Products</div><div class="value">'+Object.keys(productSet).length+'</div></div>' +
+      '<div class="summary-card"><div class="label">Active</div><div class="value">'+activeCount+'</div></div>' +
+      '<div class="summary-card"><div class="label">Inactive</div><div class="value">'+(json.uniqueUsers-activeCount)+'</div></div>';
+    document.getElementById('recCount').innerHTML='Showing <strong>'+json.totalRecords+'</strong> records';
+    buildHeader();
+    updateFlagged();
+  }).catch(function(e){
+    document.getElementById('summaryCards').innerHTML='<div class="summary-card"><div class="value" style="color:#dc2626">No data for '+dateStr+'</div></div>';
+  });
+}
+
+function scrollToNote(id){document.getElementById(id||'recalcNote').scrollIntoView({behavior:'smooth'})}
+
+function initDates(){
+  var sel = document.getElementById('reportDate');
+  var start = new Date('2026-07-29');
+  var today = new Date();
+  // 从固定起始日期 2026-07-29 扫到当前日期，找出所有存在的JSON文件
+  var promises = [];
+  var cursor = new Date(start);
+  while (cursor <= today) {
+    (function(ds){
+      promises.push(
+        fetch('Exact_autodesk_report_' + ds + '.json').then(function(r){
+          if(r.ok) return ds;
+          throw new Error('Not found');
+        }).catch(function(){ return null; })
+      );
+    })(formatDate(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  Promise.all(promises).then(function(results){
+    var found = results.filter(function(v){ return v !== null; });
+    found.sort().reverse();
+    found.forEach(function(d){
+      DATES.push(d);
+      var opt = document.createElement('option');
+      opt.value = d; opt.textContent = d;
+      sel.appendChild(opt);
+    });
+    if(found.length === 0){
+      document.getElementById('summaryCards').innerHTML = '<div class="summary-card"><div class="value" style="color:#dc2626">No data files found</div></div>';
+      return;
+    }
+    sel.value = found[0];
+    loadDate(found[0]);
+  });
+}
+
+function formatDate(d){
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+
+initDates();
+</script>
+</body>
+</html>
