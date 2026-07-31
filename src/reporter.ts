@@ -326,7 +326,8 @@ function getFlagInfo(row){
   var avg=getAdjAvg(row);
   var last=row.lastAccessed;
   var avgFlag=avg<maxAvg;
-  var daysFlag=last?((new Date()-new Date(last))/86400000)>minDays:false;
+  var endDate=REPORT_DATE?new Date(REPORT_DATE):new Date();
+  var daysFlag=last?((endDate-new Date(last))/86400000)>minDays:false;
   var mode=document.getElementById('flagMode').value;
   return {avgFlag:avgFlag, daysFlag:daysFlag, flagged:mode==='AND'?(avgFlag&&daysFlag):(avgFlag||daysFlag)};
 }
