@@ -134,8 +134,17 @@ export class CsvAnalyzer {
     });
   }
 
-  analyzeTeamUsers(keyword: string, reportDate?: string): TeamAnalysis {
-    const filtered = this.filterByTeam(keyword);
+  analyzeTeamUsers(keyword: string, reportDate?: string, excludeNames?: string[]): TeamAnalysis {
+    let filtered = this.filterByTeam(keyword);
+    if (excludeNames && excludeNames.length > 0) {
+      const excludes = excludeNames.map((n) => n.toLowerCase());
+      filtered = filtered.filter((r) => {
+        const fn = r["first_name"] || r["First Name"] || "";
+        const ln = r["last_name"] || r["Last Name"] || "";
+        const full = (fn + " " + ln).toLowerCase().trim();
+        return !excludes.some((ex) => full.includes(ex));
+      });
+    }
     const seen = new Set<string>();
     const users: TeamUserDetail[] = [];
 

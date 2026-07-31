@@ -18,6 +18,8 @@ async function main() {
   const csvPathArg = args.find((a) => a.startsWith("--csv="))?.split("=")[1];
   // --team-filter flag to filter records by team_alias (case-insensitive) in CSV mode
   const teamFilterArg = args.find((a) => a.startsWith("--team-filter="))?.split("=")[1];
+  // --exclude flag to skip users whose full name contains any of the comma-separated names (case-insensitive)
+  const excludeArg = args.find((a) => a.startsWith("--exclude="))?.split("=")[1];
 
   const config: AutodeskConfig = {
     ...defaultConfig,
@@ -27,7 +29,8 @@ async function main() {
 
   if (csvPathArg) {
     // Analysis-only mode: skip web automation
-    await runAnalysis(csvPathArg, config.outputDir, teamFilterArg);
+    const excludes = excludeArg ? excludeArg.split(",").map((s) => s.trim()).filter(Boolean) : undefined;
+    await runAnalysis(csvPathArg, config.outputDir, teamFilterArg, excludes);
     return;
   }
 
@@ -72,7 +75,7 @@ async function main() {
   }
 }
 
-async function runAnalysis(csvPath: string, outputDir: string, teamFilter?: string) {
+async function runAnalysis(csvPath: string, outputDir: string, teamFilter?: string, excludes?: string[]) {
   const analyzer = new CsvAnalyzer();
   const reporter = new HtmlReporter();
 
@@ -100,7 +103,8 @@ async function runAnalysis(csvPath: string, outputDir: string, teamFilter?: stri
   let teamAnalysis;
   if (teamFilter) {
     console.log(`\n🔍 按 team_alias 过滤 "${teamFilter}" (不区分大小写)...`);
-    teamAnalysis = analyzer.analyzeTeamUsers(teamFilter, reportDate);
+    if (excludes && excludes.length > 0) console.log(`   ⛔ 排除用户: ${excludes.join(", ")}`);
+    teamAnalysis = analyzer.analyzeTeamUsers(teamFilter, reportDate, excludes);
     console.log(`   匹配记录: ${teamAnalysis.totalRecords}, 去重用户: ${teamAnalysis.uniqueUsers}`);
   }
 
