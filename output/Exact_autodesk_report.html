@@ -52,14 +52,14 @@ tr:hover td{background:#f1f5f9}
 .flagged-box .param-row input{width:68px;padding:5px 8px;font-size:12px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;color:#1e293b;font-weight:500}
 .flagged-box .param-row input:focus{outline:2px solid #6366f1;border-color:transparent}
 .flagged-list{font-size:12px;color:#475569;margin-top:4px}
-.flagged-item{display:contents}
-.flagged-item .flag-dot{grid-column:var(--dot-col);justify-self:center;align-self:center}
-.flagged-item .flag-id{grid-column:var(--id-col);font-weight:500;color:#1e293b;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;align-self:center}
-.flagged-grid{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:4px 5px;align-items:center}
-.flag-dot,.flag-id{align-self:center}
-.flag-dot{grid-column:var(--dot-col);grid-row:var(--row);justify-self:center}
-.flag-id{grid-column:var(--id-col);grid-row:var(--row)}
-.flag-dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.flagged-cards{display:flex;flex-wrap:wrap;gap:8px}
+.flagged-cards .section-title{width:100%;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;margin:6px 0 2px}
+.flagged-card{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;background:#fafbfc;min-width:180px;transition:box-shadow .15s,border-color .15s}
+.flagged-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:#cbd5e1}
+.flagged-card .card-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.flagged-card .card-info{display:flex;flex-direction:column;min-width:0}
+.flagged-card .card-id{font-weight:700;color:#0f172a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.4}
+.flagged-card .card-sub{font-size:11px;color:#94a3b8;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .flag-dot-avg{background:#f59e0b}
 .flag-dot-days{background:#6366f1}
 .flag-dot-both{background:linear-gradient(135deg,#f59e0b 50%,#6366f1 50%)}
@@ -132,6 +132,8 @@ tr:hover td{background:#f1f5f9}
 <thead id="tableHead"></thead>
 <tbody id="tableBody"></tbody>
 </table>
+<div class="recalc-note" id="teamNote"><span class="info-icon">i</span> Exact Team &amp; GoGame (2 Maya) - May 2025.</div>
+<div class="recalc-note" id="assignNote" style="display:none"><span class="info-icon">i</span> Assign date &lt; 3mo &mdash; monthly avg recalculated.</div>
 <div class="recalc-note" id="recalcNote" style="display:none"><span class="info-icon">i</span> Recalculated: <code>Days Used &divide; months since assign</code> &mdash; original in parentheses.</div>
 </div>
 </div>
@@ -140,7 +142,357 @@ tr:hover td{background:#f1f5f9}
 <script>
 var ALL_DATA = {"2026-07-29":{"reportDate":"2026-07-29","teamKeyword":"exact","totalRecords":37,"uniqueUsers":34,"users":[{"email":"ahamajima@global.tencent.com","firstName":"AKIHIRO","lastName":"HAMAJIMA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"77","monthlyAverage":"25.5","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:20:28Z"},{"email":"devilfishwu@global.tencent.com","firstName":"JINGZHANG","lastName":"WU","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"42","monthlyAverage":"13.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:15:42Z"},{"email":"dsantos@global.tencent.com","firstName":"DANIEL","lastName":"SANTOS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"40","monthlyAverage":"13.2","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:18:27Z"},{"email":"easonyxgong@global.tencent.com","firstName":"Eason","lastName":"Gong","teamAlias":"IEGEXACT-20251125","userActivity":"inactive","daysInactive":"93","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-27","product":"Maya","assignDate":"2025-12-12T19:15:42Z"},{"email":"egawa@global.tencent.com","firstName":"KOICHI","lastName":"EGAWA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"73","monthlyAverage":"24.2","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-27T18:42:55Z"},{"email":"wbowser@global.tencent.com","firstName":"WILLIAM","lastName":"BOWSER","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"51","monthlyAverage":"16.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-02-12T02:10:33Z"},{"email":"hasegawa@global.tencent.com","firstName":"YUICHI","lastName":"HASEGAWA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"1","monthlyAverage":"0.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":""},{"email":"hiroshiito@global.tencent.com","firstName":"Hiroshi","lastName":"Ito","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"50","monthlyAverage":"16.6","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-03T08:53:21Z"},{"email":"hyagi@global.tencent.com","firstName":"HIROYUKI","lastName":"YAGI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"26","monthlyAverage":"8.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:13Z"},{"email":"kdebolt@global.tencent.com","firstName":"KEVIN","lastName":"DEBOLT","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"96","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-24","product":"3ds Max","assignDate":"2025-05-27T18:53:26Z"},{"email":"kentamura@global.tencent.com","firstName":"KEN","lastName":"TAMURA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"36","monthlyAverage":"11.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-20T21:43:37Z"},{"email":"kimiharuido@global.tencent.com","firstName":"KIMIHARU","lastName":"IDO","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-10T04:03:19Z"},{"email":"koyaiwama@global.tencent.com","firstName":"KOYA","lastName":"IWAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"48","monthlyAverage":"15.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-04-03T08:52:54Z"},{"email":"ksugiyama@global.tencent.com","firstName":"KAZUYA","lastName":"SUGIYAMA","teamAlias":"Exact Team - April 2025","userActivity":"inactive","daysInactive":"167","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-02-12","product":"3ds Max","assignDate":"2025-04-03T16:12:03Z"},{"email":"ksuzuki@global.tencent.com","firstName":"KENICHI","lastName":"SUZUKI","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"231","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2025-12-10","product":"Maya","assignDate":"2025-05-09T18:20:11Z"},{"email":"leslieren@global.tencent.com","firstName":"SHENG","lastName":"REN","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"28","monthlyAverage":"9.3","lastAccessed":"2026-05-28","product":"Maya","assignDate":""},{"email":"momokayo@global.tencent.com","firstName":"momoka","lastName":"yo","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-05-19","product":"Maya","assignDate":"2026-01-21T16:41:15Z"},{"email":"naokisomeya@global.tencent.com","firstName":"NAOKI","lastName":"SOMEYA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"31","monthlyAverage":"10.3","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2026-07-15T07:55:17Z"},{"email":"ntadisetty@global.tencent.com","firstName":"NEELU CHAKRAVARTH","lastName":"TADISETTY","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.6","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-04-07T20:22:26Z"},{"email":"osamusaito@global.tencent.com","firstName":"OSAMU","lastName":"SAITO","teamAlias":"IEGEXACT-20251125","userActivity":"active","daysInactive":"","daysUsed":"12","monthlyAverage":"4.0","lastAccessed":"2026-07-24","product":"Maya","assignDate":"2026-01-19T16:20:43Z"},{"email":"sarahxwwang@global.tencent.com","firstName":"sarah","lastName":"wang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"24","monthlyAverage":"7.9","lastAccessed":"2026-07-06","product":"Maya","assignDate":"2025-05-13T02:12:19Z"},{"email":"shikinzhang@global.tencent.com","firstName":"ZIXIN","lastName":"ZHANG","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-21","product":"Maya","assignDate":"2026-06-08T08:25:32Z"},{"email":"skunitomo@global.tencent.com","firstName":"SATOSHI","lastName":"KUNITOMO","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"48","monthlyAverage":"15.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-06-03T17:53:44Z"},{"email":"sroberts@global.tencent.com","firstName":"SACHA-MIKHAIL","lastName":"ROBERTS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"29","monthlyAverage":"9.6","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2025-06-10T02:17:04Z"},{"email":"suaiguo@global.tencent.com","firstName":"suai","lastName":"guo","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.6","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-08-22T13:42:20Z"},{"email":"takamitaki@global.tencent.com","firstName":"TAKAMI","lastName":"TAKI","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"31","monthlyAverage":"10.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-07T20:24:15Z"},{"email":"todera@global.tencent.com","firstName":"TSUYOSHI","lastName":"ODERA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:17:44Z"},{"email":"tomoasakura@global.tencent.com","firstName":"TOMOKO","lastName":"ODA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"39","monthlyAverage":"12.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-13T00:39:35Z"},{"email":"tshogaki@global.tencent.com","firstName":"TAKAHIRO","lastName":"SHOGAKI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"14","monthlyAverage":"4.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:32Z"},{"email":"tsukasaaso@global.tencent.com","firstName":"TSUKASA","lastName":"ASO","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"16","monthlyAverage":"5.3","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-04-03T16:21:19Z"},{"email":"vividaniel@global.tencent.com","firstName":"VIVICA MASAKI","lastName":"DANIEL","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-01-13T19:24:59Z"},{"email":"xaogangpang@global.tencent.com","firstName":"xiaogang","lastName":"pang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"29","monthlyAverage":"9.6","lastAccessed":"2026-07-16","product":"Maya","assignDate":"2025-09-02T18:46:06Z"},{"email":"ysugiyama@global.tencent.com","firstName":"YUKI","lastName":"SUGIYAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"4","monthlyAverage":"1.3","lastAccessed":"2026-06-05","product":"Maya","assignDate":"2026-02-12T02:10:50Z"},{"email":"yukoyokoi@global.tencent.com","firstName":"YUKO","lastName":"YOKOI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"9","monthlyAverage":"3.0","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:54Z"}]}};
 var DATES = ["2026-07-29"];
+var COLUMNS = [
+  {key:'name', label:'Name', type:'text'},
+  {key:'email', label:'Email', type:'text'},
+  {key:'teamAlias', label:'Team', type:'text'},
+  {key:'userActivity', label:'Status', type:'text'},
+  {key:'daysInactive', label:'Days Inactive', type:'number'},
+  {key:'daysUsed', label:'Days Used', type:'number'},
+  {key:'monthlyAverage', label:'Monthly Avg', type:'number'},
+  {key:'lastAccessed', label:'Last Access', type:'date'},
+  {key:'assignDate', label:'Assign Date', type:'date'},
+  {key:'product', label:'Product', type:'text'},
+];
+var data = [];
+var REPORT_DATE = '';
+
+function getVal(row,col){
+  var v=row[col.key];
+  if(col.type==='number') return parseFloat(v)||0;
+  if(col.type==='date') return v||'';
+  return v;
+}
+
+function getAdjAvg(row){
+  if(!row.assignDate||!REPORT_DATE) return parseFloat(row.monthlyAverage)||0;
+  var ad=new Date(row.assignDate);
+  var ed=new Date(REPORT_DATE);
+  var months=(ed-ad)/(1000*60*60*24*30);
+  if(months<3&&months>0) return (parseFloat(row.daysUsed)||0)/months;
+  return parseFloat(row.monthlyAverage)||0;
+}
+
+function compare(a,b,col,dir){
+  var va=getVal(a,col), vb=getVal(b,col);
+  if(col.type==='number') return dir*(va-vb);
+  if(col.type==='date'){
+    if(!va&&!vb) return 0;
+    if(!va) return 1;
+    if(!vb) return -1;
+    return dir*(new Date(va)-new Date(vb));
+  }
+  va=String(va).toLowerCase(); vb=String(vb).toLowerCase();
+  if(va<vb) return -dir;
+  if(va>vb) return dir;
+  return 0;
+}
+
+function getFlagInfo(row){
+  var maxAvg=parseFloat(document.getElementById('flagMaxAvg').value)||7;
+  var minDays=parseFloat(document.getElementById('flagMinDays').value)||7;
+  var avg=getAdjAvg(row);
+  var last=row.lastAccessed;
+  var avgFlag=avg<maxAvg;
+  var daysFlag=last?((new Date()-new Date(last))/86400000)>minDays:false;
+  var mode=document.getElementById('flagMode').value;
+  return {avgFlag:avgFlag, daysFlag:daysFlag, flagged:mode==='AND'?(avgFlag&&daysFlag):(avgFlag||daysFlag)};
+}
+
+function updateFlagged(){
+  var flagged=[];
+  for(var fi=0;fi<data.length;fi++){
+    var info=getFlagInfo(data[fi]);
+    if(info.flagged) flagged.push({row:data[fi], info:info});
+  }
+  var list=document.getElementById('flaggedList');
+  if(flagged.length===0){
+    list.innerHTML='<span style="color:#92400e">No users match the current thresholds.</span>';
+  }else{
+    var activeItems=[], inactiveItems=[];
+    for(var fi=0;fi<flagged.length;fi++){
+      var r=flagged[fi].row, info=flagged[fi].info;
+      var emailId=r.email.split('@')[0];
+      var dotCls=info.avgFlag&&info.daysFlag?'flag-dot-both':(info.avgFlag?'flag-dot-avg':'flag-dot-days');
+      if(r.userActivity.toLowerCase()==='active'){
+        activeItems.push({emailId:emailId, name:r.name, email:r.email, dotCls:dotCls});
+      }else{
+        inactiveItems.push({emailId:emailId, name:r.name, email:r.email, dotCls:dotCls});
+      }
+    }
+    var html='<div class="highlight-count" style="margin-bottom:10px">'+flagged.length+' user(s) flagged:</div><div class="flagged-cards">';
+    if(activeItems.length>0){
+      html+='<div class="section-title">Active</div>';
+      for(var ci=0;ci<activeItems.length;ci++){
+        var a=activeItems[ci];
+        html+='<div class="flagged-card" onclick="showUser(&#39;'+esc(a.email)+'&#39;)" style="cursor:pointer"><span class="card-dot '+a.dotCls+'"></span><div class="card-info"><div class="card-id">'+esc(a.emailId)+'</div><div class="card-sub">'+esc(a.name||a.email)+'</div></div></div>';
+      }
+    }
+    if(inactiveItems.length>0){
+      html+='<div class="section-title">Inactive</div>';
+      for(var ci=0;ci<inactiveItems.length;ci++){
+        var b=inactiveItems[ci];
+        html+='<div class="flagged-card" onclick="showUser(&#39;'+esc(b.email)+'&#39;)" style="cursor:pointer"><span class="card-dot '+b.dotCls+'"></span><div class="card-info"><div class="card-id">'+esc(b.emailId)+'</div><div class="card-sub">'+esc(b.name||b.email)+'</div></div></div>';
+      }
+    }
+    html+='</div>';
+    list.innerHTML=html;
+  }
+  applyFiltersAndSort();
+}
+
+function toggleDetails(){
+  var toggle=document.getElementById('detailToggle');
+  var content=document.getElementById('detailContent');
+  var collapsed=toggle.classList.toggle('collapsed');
+  content.classList.toggle('collapsed');
+  if(!collapsed) applyFiltersAndSort();
+}
+
+var sortCol=null, sortDir=1, showFlagged=false;
+
+function applyFiltersAndSort(){
+  var filters=[];
+  COLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('f_'+ci);
+    if(!el) return;
+    if(col.type==='text'){
+      var v=el.value;
+      if(v){
+        filters.push({col:col, test:function(r){return String(getVal(r,col)).toLowerCase()===v.toLowerCase();}});
+      }
+    }else if(col.type==='number'){
+      var opEl=document.getElementById('fop_'+ci);
+      var numEl=el;
+      var op=opEl?opEl.value:'';
+      var num=parseFloat(numEl.value);
+      if(op&&!isNaN(num)){
+        filters.push({col:col, test:function(r){
+          var val=getVal(r,col);
+          if(op==='>=') return val>=num;
+          if(op==='<=') return val<=num;
+          if(op==='>') return val>num;
+          if(op==='<') return val<num;
+          if(op==='=') return val===num;
+          return true;
+        }});
+      }
+    }else if(col.type==='date'){
+      var modeEl=document.getElementById('fdm_'+ci);
+      var dateEl=el;
+      var mode=modeEl?modeEl.value:'';
+      var dateVal=dateEl.value;
+      if(mode&&dateVal){
+        var cmp=new Date(dateVal).getTime();
+        filters.push({col:col, test:function(r){
+          var d=getVal(r,col);
+          if(!d) return false;
+          var t=new Date(d).getTime();
+          if(mode==='before') return t<=cmp+86400000;
+          if(mode==='after') return t>=cmp;
+          return true;
+        }});
+      }
+    }
+  });
+  if(showFlagged){
+    var flagInfoMap={};
+    for(var fi=0;fi<data.length;fi++){
+      var info=getFlagInfo(data[fi]);
+      if(info.flagged) flagInfoMap[data[fi]._idx]=true;
+    }
+    filters.push({col:null, test:function(r){return !!flagInfoMap[r._idx];}});
+  }
+  var filtered=data.filter(function(r){return filters.every(function(f){return f.test(r);});});
+  if(sortCol!==null){
+    var col=COLUMNS[sortCol];
+    filtered.sort(function(a,b){return compare(a,b,col,sortDir);});
+  }
+  render(filtered);
+  var visible=document.getElementById('detailContent').classList.contains('collapsed');
+  if(!visible) document.getElementById('recCount').innerHTML='Showing <strong>'+filtered.length+'</strong> records';
+}
+
+function render(rows){
+  var tbody=document.getElementById('tableBody');
+  var flagInfoMap={};
+  for(var fi=0;fi<data.length;fi++){
+    var info=getFlagInfo(data[fi]);
+    if(info.flagged) flagInfoMap[data[fi]._idx]=info;
+  }
+  var html='';
+  var endDate=REPORT_DATE?new Date(REPORT_DATE):new Date();
+  for(var ri=0;ri<rows.length;ri++){
+    var r=rows[ri];
+    var act=r.userActivity.toLowerCase()==='active'?'Active':'Inactive';
+    var ab=act==='Active'?'<span class="badge badge-active">Active</span>':'<span class="badge badge-inactive">Inactive</span>';
+    var info=flagInfoMap[r._idx];
+    var rowCls=info&&!showFlagged?' class="flagged-row"':'';
+    var avgCell=esc(r.monthlyAverage||'0');
+    var daysCell=esc(r.lastAccessed||'-');
+    var assignCell=esc((r.assignDate||'').split('T')[0]||'-');
+    if(r.assignDate){
+      var ad=new Date(r.assignDate);
+      var months=(endDate-ad)/(1000*60*60*24*30);
+      if(months<3&&months>0){
+        var recalcAvg=getAdjAvg(r);
+        avgCell=esc(recalcAvg.toFixed(1))+' ('+esc(r.monthlyAverage||'0')+') <span class="info-icon" onclick="scrollToNote()" style="cursor:pointer">i</span>';
+        assignCell='<span class="cell-assign-recalc">'+esc((r.assignDate||'').split('T')[0])+' <span class="info-icon" onclick="scrollToNote(&#39;assignNote&#39;)" style="cursor:pointer">i</span></span>';
+      }
+    }
+    if(showFlagged&&info){
+      if(info.avgFlag) avgCell='<span class="cell-highlight-avg">'+avgCell+'</span>';
+      if(info.daysFlag) daysCell='<span class="cell-highlight-days">'+daysCell+'</span>';
+    }
+    var teamCell=esc(r.teamAlias);
+    if(r.teamAlias==='Exact Team & GoGame (2 Maya) - May 2025') teamCell=esc('Exact Team - May 2025')+' <span class="info-icon" onclick="scrollToNote(&#39;teamNote&#39;)" style="cursor:pointer">i</span>';
+    html+='<tr'+rowCls+'><td>'+esc(r.name)+'</td><td>'+esc(r.email)+'</td><td>'+teamCell+'</td><td>'+ab+'</td><td>'+esc(r.daysInactive||'-')+'</td><td>'+esc(r.daysUsed||'0')+'</td><td>'+avgCell+'</td><td>'+daysCell+'</td><td>'+assignCell+'</td><td>'+esc(r.product)+'</td></tr>';
+  }
+  tbody.innerHTML=html;
+  var hasRecalc=false;
+  for(var ri=0;ri<rows.length;ri++){
+    var r=rows[ri];
+    if(r.assignDate){
+      var ad=new Date(r.assignDate);
+      if((endDate-ad)/(1000*60*60*24*30)<3) hasRecalc=true;
+    }
+  }
+  var note=document.getElementById('recalcNote');
+  if(note) note.style.display=hasRecalc?'':'none';
+  var aNote=document.getElementById('assignNote');
+  if(aNote) aNote.style.display=hasRecalc?'':'none';
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function buildHeader(){
+  var thead=document.getElementById('tableHead');
+  var h='<tr>';
+  COLUMNS.forEach(function(col,ci){
+    var cls='';
+    if(sortCol===ci) cls=sortDir>0?' sorted-asc':' sorted-desc';
+    var w=[0,4,5,6].indexOf(ci)>=0?' style="width:'+(ci===0?160:ci===6?90:70)+'px"':'';
+    h+='<th class="'+cls+'" onclick="sortBy('+ci+')"'+w+'><span>'+col.label+'</span><span class="sort-icon"> ▲▼</span></th>';
+  });
+  h+='</tr><tr class="filter-row">';
+  COLUMNS.forEach(function(col,ci){
+    if(col.type==='text'){
+      var vals={};
+      for(var i=0;i<data.length;i++){
+        var v=getVal(data[i],col);
+        if(v) vals[v]=true;
+      }
+      var sorted=Object.keys(vals).sort();
+      var opts='<option value="">All</option>';
+      for(var i=0;i<sorted.length;i++){
+        var sv=sorted[i];
+        opts+='<option value="'+esc(sv)+'">'+esc(sv)+'</option>';
+      }
+      h+='<th><select id="f_'+ci+'" onchange="applyFiltersAndSort()">'+opts+'</select></th>';
+    }else if(col.type==='number'){
+      h+='<th><div class="cmp-row"><select id="fop_'+ci+'" onchange="applyFiltersAndSort()"><option value="">-</option><option value=">=">≥</option><option value="<=">≤</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select><input id="f_'+ci+'" type="number" oninput="applyFiltersAndSort()" placeholder="value"></div></th>';
+    }else if(col.type==='date'){
+      h+='<th><div class="date-row"><select id="fdm_'+ci+'" onchange="applyFiltersAndSort()"><option value="">-</option><option value="before">before</option><option value="after">after</option></select><input id="f_'+ci+'" type="text" placeholder="YYYY-MM-DD" oninput="applyFiltersAndSort()"></div></th>';
+    }
+  });
+  h+='</tr>';
+  thead.innerHTML=h;
+}
+
+function showFlaggedOnly(){
+  showFlagged=true;
+  sortCol=null; sortDir=1;
+  clearFilterInputs();
+  applyFiltersAndSort();
+}
+
+function showUser(email){
+  clearFilterInputs();
+  showFlagged=true;
+  var el=document.getElementById('f_1');
+  if(el) el.value=email;
+  var toggle=document.getElementById('detailToggle');
+  var content=document.getElementById('detailContent');
+  if(toggle.classList.contains('collapsed')){
+    toggle.classList.remove('collapsed');
+    content.classList.remove('collapsed');
+  }
+  applyFiltersAndSort();
+}
+
+function clearFilterInputs(){
+  COLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('f_'+ci);
+    if(el){
+      if(el.tagName==='SELECT') el.selectedIndex=0;
+      else el.value='';
+    }
+    var opEl=document.getElementById('fop_'+ci);
+    if(opEl) opEl.selectedIndex=0;
+    var dmEl=document.getElementById('fdm_'+ci);
+    if(dmEl) dmEl.selectedIndex=0;
+  });
+  var ths=document.querySelectorAll('#tableHead th');
+  for(var i=0;i<ths.length;i++) ths[i].className='';
+}
+
+function clearFilters(){
+  showFlagged=false;
+  sortCol=null; sortDir=1;
+  clearFilterInputs();
+  applyFiltersAndSort();
+}
+
+function sortBy(ci){
+  if(sortCol===ci) sortDir*=-1;
+  else{sortCol=ci; sortDir=-1;}
+  applyFiltersAndSort();
+  var ths=document.querySelectorAll('#tableHead th');
+  for(var i=0;i<ths.length;i++){
+    ths[i].className=(i===ci?(sortDir>0?'sorted-asc':'sorted-desc'):'');
+  }
+}
+
+function loadDate(dateStr){
+  var json = ALL_DATA[dateStr];
+  if(!json){ document.getElementById('summaryCards').innerHTML='<div class="summary-card"><div class="value" style="color:#dc2626">No data for '+dateStr+'</div></div>'; return; }
+  var users = json.users;
+  data = users.map(function(u,i){
+    return {
+      _idx:i,
+      name:(u.firstName+' '+u.lastName).trim(),
+      email:u.email,
+      teamAlias:u.teamAlias,
+      userActivity:u.userActivity,
+      daysInactive:u.daysInactive||'0',
+      daysUsed:u.daysUsed||'0',
+      monthlyAverage:u.monthlyAverage||'0',
+      lastAccessed:u.lastAccessed||'',
+      assignDate:u.assignDate||'',
+      product:u.product
+    };
+  });
+  REPORT_DATE = dateStr;
+  var productSet = {};
+  var activeCount = 0;
+  for(var i=0;i<users.length;i++){
+    if(users[i].product) productSet[users[i].product]=true;
+    if(users[i].userActivity.toLowerCase()==='active') activeCount++;
+  }
+  document.getElementById('summaryCards').innerHTML =
+    '<div class="summary-card"><div class="label">Records</div><div class="value">'+json.totalRecords+'</div></div>' +
+    '<div class="summary-card"><div class="label">Users</div><div class="value">'+json.uniqueUsers+'</div></div>' +
+    '<div class="summary-card"><div class="label">Products</div><div class="value">'+Object.keys(productSet).length+'</div></div>' +
+    '<div class="summary-card"><div class="label">Active</div><div class="value">'+activeCount+'</div></div>' +
+    '<div class="summary-card"><div class="label">Inactive</div><div class="value">'+(json.uniqueUsers-activeCount)+'</div></div>';
+  document.getElementById('recCount').innerHTML='Showing <strong>'+json.totalRecords+'</strong> records';
+  buildHeader();
+  updateFlagged();
+}
+
+function scrollToNote(id){document.getElementById(id||'recalcNote').scrollIntoView({behavior:'smooth'})}
+
+loadDate('2026-07-29');
 </script>
-<script src="Exact_autodesk_report.js"></script>
 </body>
 </html>
