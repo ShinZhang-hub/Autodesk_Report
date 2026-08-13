@@ -1,0 +1,4 @@
+hashed_autodesk_id,first_name,last_name,email,autodesk_id,team_alias,group,offering_name,version,seat_assignment,assigned_date,unassigned_date,user_activity,days_inactive,access_option,days_used,monthly_average,tokens_used,last_accessed
+8338b507f737d413f595e743200cf79314bf6021,KOICHI,EGAWA,egawa@global.tencent.com,egawaK7TYN,IEGEXACT-20260804,,MotionBuilder,2026,,2026-08-05T06:40:50Z,,,,Flex,3,1,18,2026/8/12
+aec1f7a0bb0bef818f5da9405bfbf035be483990,KOYA,IWAMA,koyaiwama@global.tencent.com,koyaiwamaMFSQ6,IEGEXACT-20260804,,Flow Studio - Pro,cloud,assigned,2026-08-03T08:29:47Z,,active,,Subscription,1,0.3,,2026/8/3
+aec1f7a0bb0bef818f5da9405bfbf035be483990,KOYA,IWAMA,koyaiwama@global.tencent.com,koyaiwamaMFSQ6,IEGEXACT-20260804,,MotionBuilder,2026,,2026-08-03T08:29:48Z,,,,Flex,1,0.3,6,2026/8/13

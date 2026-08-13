@@ -7,11 +7,12 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1e293b;padding:32px}
+html{scrollbar-gutter:stable}
 .container{max-width:1440px;margin:0 auto}
 h1{font-size:22px;font-weight:700;color:#0f172a;letter-spacing:-.3px}
 .meta{color:#64748b;margin:8px 0 32px;font-size:13px;display:flex;align-items:center;gap:8px}
 .meta select{padding:3px 8px;font-size:12px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;color:#1e293b;font-weight:500;cursor:pointer}
-.meta select:focus{outline:2px solid #6366f1;border-color:transparent}
+.meta select:focus{outline:2px solid #2563eb;border-color:transparent}
 .summary{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
 .summary-card{background:#fff;border-radius:10px;padding:20px 28px;box-shadow:0 1px 2px rgba(0,0,0,.06);min-width:140px;border:1px solid #f1f5f9}
 .summary-card .label{font-size:11px;color:#94a3b8;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
@@ -22,11 +23,11 @@ h2{font-size:16px;font-weight:600;color:#0f172a;margin-bottom:14px}
 table{width:100%;border-collapse:collapse;min-width:1200px}
 th{background:#f8fafc;color:#475569;padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;user-select:none;white-space:nowrap;position:relative;border-bottom:2px solid #e2e8f0}
 th .sort-icon{font-size:9px;margin-left:4px;opacity:.25}
-th.sorted-asc .sort-icon,th.sorted-desc .sort-icon{opacity:1;color:#6366f1}
+th.sorted-asc .sort-icon,th.sorted-desc .sort-icon{opacity:1;color:#2563eb}
 .filter-row th{background:#fff;padding:6px 8px;cursor:default;border-bottom:1px solid #e2e8f0}
 .filter-row input,.filter-row select{width:100%;padding:5px 6px;font-size:11px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;box-sizing:border-box;color:#1e293b}
 .filter-row select{cursor:pointer}
-.filter-row input:focus,.filter-row select:focus{outline:2px solid #6366f1;border-color:transparent}
+.filter-row input:focus,.filter-row select:focus{outline:2px solid #2563eb;border-color:transparent}
 .filter-row .cmp-row{display:flex;gap:2px}
 .filter-row .cmp-row select{width:44px;flex-shrink:0}
 .filter-row .cmp-row input{flex:1;min-width:0}
@@ -40,6 +41,8 @@ tr:hover td{background:#f1f5f9}
 .badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.2px}
 .badge-active{background:#d1fae5;color:#065f46}
 .badge-inactive{background:#fef2f2;color:#991b1b}
+.badge-flex{background:#dbeafe;color:#1e40af}
+.badge-sub{background:#fef9c3;color:#854d0e}
 .rec-count{font-size:12px;color:#64748b;margin:0 0 10px 4px}
 .rec-count strong{color:#0f172a}
 .flagged-box{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin-bottom:24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
@@ -48,9 +51,9 @@ tr:hover td{background:#f1f5f9}
 .flagged-box .param-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 .flagged-box .param-row label{font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
 .flagged-box .param-row label.avg-label{color:#d97706}
-.flagged-box .param-row label.days-label{color:#6366f1}
+.flagged-box .param-row label.days-label{color:#2563eb}
 .flagged-box .param-row input{width:68px;padding:5px 8px;font-size:12px;border:1px solid #e2e8f0;border-radius:5px;background:#fff;color:#1e293b;font-weight:500}
-.flagged-box .param-row input:focus{outline:2px solid #6366f1;border-color:transparent}
+.flagged-box .param-row input:focus{outline:2px solid #2563eb;border-color:transparent}
 .flagged-list{font-size:12px;color:#475569;margin-top:4px}
 .flagged-cards{display:flex;flex-wrap:wrap;gap:8px}
 .flagged-cards .section-title{width:100%;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.3px;margin:6px 0 2px}
@@ -61,10 +64,10 @@ tr:hover td{background:#f1f5f9}
 .flagged-card .card-id{font-weight:700;color:#0f172a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.4}
 .flagged-card .card-sub{font-size:11px;color:#94a3b8;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .flag-dot-avg{background:#f59e0b}
-.flag-dot-days{background:#6366f1}
-.flag-dot-both{background:linear-gradient(135deg,#f59e0b 50%,#6366f1 50%)}
+.flag-dot-days{background:#2563eb}
+.flag-dot-both{background:linear-gradient(135deg,#f59e0b 50%,#2563eb 50%)}
 .cell-highlight-avg{background:#fef3c7!important;outline:1px solid #f59e0b40;outline-offset:-1px}
-.cell-highlight-days{background:#e0e7ff!important;outline:1px solid #6366f140;outline-offset:-1px}
+.cell-highlight-days{background:#dbeafe!important;outline:1px solid #2563eb40;outline-offset:-1px}
 .cell-assign-recalc{background:#fef2f2!important;color:#dc2626!important;font-weight:600}
 .info-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#94a3b8;color:#fff;font-size:10px;font-weight:700;font-style:normal;cursor:help;line-height:1}
 .recalc-note{font-size:11px;color:#64748b;margin-top:8px;padding:8px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;line-height:1.5}
@@ -76,22 +79,53 @@ tr:hover td{background:#f1f5f9}
 .collapse-toggle .arrow{font-size:10px;color:#94a3b8;transition:transform .2s}
 .collapse-toggle.collapsed .arrow{transform:rotate(-90deg)}
 .collapse-toggle h2{margin:0;padding:0;display:inline}
-.collapse-content{overflow:hidden;transition:max-height .3s ease}
+.collapse-content{overflow:hidden;transition:max-height .3s ease;max-height:3000px}
 .collapse-content.collapsed{max-height:0}
 .toolbar{display:flex;gap:8px;margin-bottom:12px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;transition:all .15s}
-.btn-primary{background:#6366f1;color:#fff}
-.btn-primary:hover{background:#4f46e5}
+.btn-primary{background:#2563eb;color:#fff}
+.btn-primary:hover{background:#1d4ed8}
 .btn-warning{background:#f59e0b;color:#fff}
 .btn-warning:hover{background:#d97706}
 .btn-outline{background:transparent;color:#64748b;border:1px solid #e2e8f0}
 .btn-outline:hover{background:#f8fafc;color:#0f172a}
 .highlight-count{font-size:12px;color:#475569;font-weight:600}
+.tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid #e2e8f0;padding-bottom:0}
+.tab{padding:10px 20px;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab:hover{color:#0f172a}
+.tab.active{color:#2563eb;border-bottom-color:#2563eb}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.token-summary{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.token-table .bar-cell{display:flex;align-items:center;gap:8px}
+.token-bar{height:8px;background:#2563eb;border-radius:4px}
+.token-total td{background:#1e3a8a!important;color:#fff!important;font-weight:700}
+.token-note{font-size:12px;color:#94a3b8;margin-top:12px;line-height:1.5}
+.pct-bar{height:10px;width:100%;max-width:140px;background:#eff6ff;border-radius:5px;overflow:hidden;margin-top:6px}
+.pct-bar i{display:block;height:100%;background:#2563eb;border-radius:5px;transition:width .4s ease}
+.pct-label{font-size:10px;color:#94a3b8;margin-top:3px}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.2);width:420px;max-width:90vw;max-height:80vh;overflow:auto;padding:20px 24px}
+.modal-box h3{font-size:15px;font-weight:700;color:#0f172a;margin-bottom:14px}
+.modal-user{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.modal-user:last-child{border-bottom:none}
+.modal-user .name{color:#334155;font-weight:600}
+.modal-user .days{color:#2563eb;font-weight:700}
+.modal-close{position:sticky;bottom:0;text-align:right;padding-top:12px}
+.proc-input{border:1px solid transparent;background:transparent;padding:5px 6px;font-size:12px;border-radius:4px;color:#334155}
+.proc-input:hover{border-color:#e2e8f0}
+.proc-input:focus{outline:none;border-color:#2563eb;background:#fff}
 </style>
 </head>
 <body>
 <div class="container">
 <h1>Autodesk Report for Exact</h1>
+<div class="tabs">
+  <button class="tab active" id="tab-user" onclick="switchTab('user')">User Report</button>
+  <button class="tab" id="tab-token" onclick="switchTab('token')">Token Report</button>
+</div>
+<div class="tab-content active" id="page-user">
 <div class="meta">
   Report Date: <select id="reportDate" onchange="loadDate(this.value)">
     <option value="">-- Select Date --</option>
@@ -139,8 +173,142 @@ tr:hover td{background:#f1f5f9}
 </div>
 </section>
 </div>
+
+<div class="tab-content" id="page-token">
+<div class="meta">
+  Token Report | Source: <span id="tokenTeam"></span>
+</div>
+<div class="summary" id="tokenSummaryCards"></div>
+
+<section>
+<div class="flagged-box" id="tokenBox">
+<h3>Token Highlights</h3>
+<div class="flagged-cards" id="tokenHighlights"></div>
+</div>
+</section>
+
+<section>
+<div class="collapse-toggle collapsed" id="tokenDetailToggle" onclick="toggleTokenDetails()">
+<span class="arrow">&#9660;</span>
+<h2>Token Details</h2>
+</div>
+<div class="collapse-content collapsed" id="tokenDetailContent">
+<div class="toolbar">
+<button class="btn btn-primary" onclick="tokenClearFilters()">&#10227; Clear All Filters</button>
+<button class="btn btn-outline" onclick="tokenSortTokens()">&#8595; Sort by Token</button>
+</div>
+<div class="rec-count" id="tokenRecCount">Loading...</div>
+<div class="table-wrap">
+<table id="tokenTable">
+<thead id="tokenTableHead"></thead>
+<tbody id="tokenTableBody"></tbody>
+</table>
+<div class="recalc-note"><span class="info-icon">i</span> Only records with tokens_used &gt; 0 are included; total row shows Token Used sum.</div>
+<div class="recalc-note" id="tokenRecalcNote" style="display:none"><span class="info-icon">i</span> Assign date &lt; 3mo &mdash; monthly avg recalculated: <code>Days Used &divide; months since assign</code> &mdash; original in parentheses.</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="collapse-toggle collapsed" id="procToggle" onclick="toggleProc()">
+<span class="arrow">&#9660;</span>
+<h2>Procurement Records</h2>
+</div>
+<div class="collapse-content collapsed" id="procContent">
+<div class="toolbar">
+<button class="btn btn-primary" onclick="procAdd()">&#43; Add Record</button>
+<button class="btn btn-warning" onclick="procClear()">&#128465; Clear All</button>
+</div>
+<div class="summary token-summary" id="procSummary"></div>
+<div class="table-wrap">
+<table id="procTable">
+<thead><tr><th>Tokens</th><th>Purchase Date</th><th>Expiry Date</th><th>Notes</th><th></th></tr></thead>
+<tbody id="procBody"></tbody>
+</table>
+</div>
+<div class="recalc-note"><span class="info-icon">i</span> 手动录入的采购记录, 保存到 Procurement Records.json。删除需输入 delete 确认。</div>
+</div>
+</section>
+</div>
+</div>
+<div class="modal-overlay" id="tokenModal" onclick="if(event.target===this)tokenModalClose()">
+  <div class="modal-box">
+    <h3 id="tokenModalTitle"></h3>
+    <div id="tokenModalBody"></div>
+    <div class="modal-close"><button class="btn btn-primary" onclick="tokenModalClose()">Close</button></div>
+  </div>
+</div>
 <script>
-var DATES = [];
+var ALL_DATA = JSON.parse('{"2026-07-29":{"reportDate":"2026-07-29","teamKeyword":"exact","totalRecords":37,"uniqueUsers":34,"users":[{"email":"ahamajima@global.tencent.com","firstName":"AKIHIRO","lastName":"HAMAJIMA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"77","monthlyAverage":"25.5","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:20:28Z"},{"email":"devilfishwu@global.tencent.com","firstName":"JINGZHANG","lastName":"WU","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"42","monthlyAverage":"13.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:15:42Z"},{"email":"dsantos@global.tencent.com","firstName":"DANIEL","lastName":"SANTOS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"40","monthlyAverage":"13.2","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:18:27Z"},{"email":"easonyxgong@global.tencent.com","firstName":"Eason","lastName":"Gong","teamAlias":"IEGEXACT-20251125","userActivity":"inactive","daysInactive":"93","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-27","product":"Maya","assignDate":"2025-12-12T19:15:42Z"},{"email":"egawa@global.tencent.com","firstName":"KOICHI","lastName":"EGAWA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"73","monthlyAverage":"24.2","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-27T18:42:55Z"},{"email":"wbowser@global.tencent.com","firstName":"WILLIAM","lastName":"BOWSER","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"51","monthlyAverage":"16.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-02-12T02:10:33Z"},{"email":"hasegawa@global.tencent.com","firstName":"YUICHI","lastName":"HASEGAWA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"1","monthlyAverage":"0.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":""},{"email":"hiroshiito@global.tencent.com","firstName":"Hiroshi","lastName":"Ito","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"50","monthlyAverage":"16.6","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-03T08:53:21Z"},{"email":"hyagi@global.tencent.com","firstName":"HIROYUKI","lastName":"YAGI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"26","monthlyAverage":"8.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:13Z"},{"email":"kdebolt@global.tencent.com","firstName":"KEVIN","lastName":"DEBOLT","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"96","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-24","product":"3ds Max","assignDate":"2025-05-27T18:53:26Z"},{"email":"kentamura@global.tencent.com","firstName":"KEN","lastName":"TAMURA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"36","monthlyAverage":"11.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-20T21:43:37Z"},{"email":"kimiharuido@global.tencent.com","firstName":"KIMIHARU","lastName":"IDO","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-10T04:03:19Z"},{"email":"koyaiwama@global.tencent.com","firstName":"KOYA","lastName":"IWAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"48","monthlyAverage":"15.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-04-03T08:52:54Z"},{"email":"ksugiyama@global.tencent.com","firstName":"KAZUYA","lastName":"SUGIYAMA","teamAlias":"Exact Team - April 2025","userActivity":"inactive","daysInactive":"167","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-02-12","product":"3ds Max","assignDate":"2025-04-03T16:12:03Z"},{"email":"ksuzuki@global.tencent.com","firstName":"KENICHI","lastName":"SUZUKI","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"231","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2025-12-10","product":"Maya","assignDate":"2025-05-09T18:20:11Z"},{"email":"leslieren@global.tencent.com","firstName":"SHENG","lastName":"REN","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"28","monthlyAverage":"9.3","lastAccessed":"2026-05-28","product":"Maya","assignDate":""},{"email":"momokayo@global.tencent.com","firstName":"momoka","lastName":"yo","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-05-19","product":"Maya","assignDate":"2026-01-21T16:41:15Z"},{"email":"naokisomeya@global.tencent.com","firstName":"NAOKI","lastName":"SOMEYA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"31","monthlyAverage":"10.3","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2026-07-15T07:55:17Z"},{"email":"ntadisetty@global.tencent.com","firstName":"NEELU CHAKRAVARTH","lastName":"TADISETTY","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.6","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-04-07T20:22:26Z"},{"email":"osamusaito@global.tencent.com","firstName":"OSAMU","lastName":"SAITO","teamAlias":"IEGEXACT-20251125","userActivity":"active","daysInactive":"","daysUsed":"12","monthlyAverage":"4.0","lastAccessed":"2026-07-24","product":"Maya","assignDate":"2026-01-19T16:20:43Z"},{"email":"sarahxwwang@global.tencent.com","firstName":"sarah","lastName":"wang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"24","monthlyAverage":"7.9","lastAccessed":"2026-07-06","product":"Maya","assignDate":"2025-05-13T02:12:19Z"},{"email":"shikinzhang@global.tencent.com","firstName":"ZIXIN","lastName":"ZHANG","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-21","product":"Maya","assignDate":"2026-06-08T08:25:32Z"},{"email":"skunitomo@global.tencent.com","firstName":"SATOSHI","lastName":"KUNITOMO","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"48","monthlyAverage":"15.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-06-03T17:53:44Z"},{"email":"sroberts@global.tencent.com","firstName":"SACHA-MIKHAIL","lastName":"ROBERTS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"29","monthlyAverage":"9.6","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2025-06-10T02:17:04Z"},{"email":"suaiguo@global.tencent.com","firstName":"suai","lastName":"guo","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.6","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-08-22T13:42:20Z"},{"email":"takamitaki@global.tencent.com","firstName":"TAKAMI","lastName":"TAKI","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"31","monthlyAverage":"10.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-07T20:24:15Z"},{"email":"todera@global.tencent.com","firstName":"TSUYOSHI","lastName":"ODERA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-04-03T16:17:44Z"},{"email":"tomoasakura@global.tencent.com","firstName":"TOMOKO","lastName":"ODA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"39","monthlyAverage":"12.9","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2025-05-13T00:39:35Z"},{"email":"tshogaki@global.tencent.com","firstName":"TAKAHIRO","lastName":"SHOGAKI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"14","monthlyAverage":"4.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:32Z"},{"email":"tsukasaaso@global.tencent.com","firstName":"TSUKASA","lastName":"ASO","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"16","monthlyAverage":"5.3","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-04-03T16:21:19Z"},{"email":"vividaniel@global.tencent.com","firstName":"VIVICA MASAKI","lastName":"DANIEL","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.6","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-01-13T19:24:59Z"},{"email":"xaogangpang@global.tencent.com","firstName":"xiaogang","lastName":"pang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"29","monthlyAverage":"9.6","lastAccessed":"2026-07-16","product":"Maya","assignDate":"2025-09-02T18:46:06Z"},{"email":"ysugiyama@global.tencent.com","firstName":"YUKI","lastName":"SUGIYAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"4","monthlyAverage":"1.3","lastAccessed":"2026-06-05","product":"Maya","assignDate":"2026-02-12T02:10:50Z"},{"email":"yukoyokoi@global.tencent.com","firstName":"YUKO","lastName":"YOKOI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"9","monthlyAverage":"3.0","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-01T02:15:54Z"}]},"2026-07-31":{"reportDate":"2026-07-31","teamKeyword":"exact","totalRecords":35,"uniqueUsers":32,"users":[{"email":"ahamajima@global.tencent.com","firstName":"AKIHIRO","lastName":"HAMAJIMA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"79","monthlyAverage":"25.8","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-04-03T16:20:28Z"},{"email":"devilfishwu@global.tencent.com","firstName":"JINGZHANG","lastName":"WU","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"44","monthlyAverage":"14.4","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-04-03T16:15:42Z"},{"email":"dsantos@global.tencent.com","firstName":"DANIEL","lastName":"SANTOS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"42","monthlyAverage":"13.7","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-04-03T16:18:27Z"},{"email":"easonyxgong@global.tencent.com","firstName":"Eason","lastName":"Gong","teamAlias":"IEGEXACT-20251125","userActivity":"inactive","daysInactive":"95","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-27","product":"Maya","assignDate":"2025-12-12T19:15:42Z"},{"email":"egawa@global.tencent.com","firstName":"KOICHI","lastName":"EGAWA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"74","monthlyAverage":"24.2","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-05-27T18:42:55Z"},{"email":"wbowser@global.tencent.com","firstName":"WILLIAM","lastName":"BOWSER","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"52","monthlyAverage":"17.0","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2026-02-12T02:10:33Z"},{"email":"hasegawa@global.tencent.com","firstName":"YUICHI","lastName":"HASEGAWA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"1","monthlyAverage":"0.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-29T01:01:58Z"},{"email":"hiroshiito@global.tencent.com","firstName":"Hiroshi","lastName":"Ito","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"50","monthlyAverage":"16.3","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-03T08:53:21Z"},{"email":"hyagi@global.tencent.com","firstName":"HIROYUKI","lastName":"YAGI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"28","monthlyAverage":"9.2","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-07-01T02:15:13Z"},{"email":"kdebolt@global.tencent.com","firstName":"KEVIN","lastName":"DEBOLT","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"98","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-24","product":"3ds Max","assignDate":"2025-05-27T18:53:26Z"},{"email":"kentamura@global.tencent.com","firstName":"KEN","lastName":"TAMURA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"37","monthlyAverage":"12.1","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-05-20T21:43:37Z"},{"email":"kimiharuido@global.tencent.com","firstName":"KIMIHARU","lastName":"IDO","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-10T04:03:19Z"},{"email":"koyaiwama@global.tencent.com","firstName":"KOYA","lastName":"IWAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"50","monthlyAverage":"16.3","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-04-03T08:52:54Z"},{"email":"ksugiyama@global.tencent.com","firstName":"KAZUYA","lastName":"SUGIYAMA","teamAlias":"Exact Team - April 2025","userActivity":"inactive","daysInactive":"169","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-02-12","product":"3ds Max","assignDate":"2025-04-03T16:12:03Z"},{"email":"ksuzuki@global.tencent.com","firstName":"KENICHI","lastName":"SUZUKI","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"233","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2025-12-10","product":"Maya","assignDate":"2025-05-09T18:20:11Z"},{"email":"leslieren@global.tencent.com","firstName":"SHENG","lastName":"REN","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"27","monthlyAverage":"8.8","lastAccessed":"2026-05-28","product":"Maya","assignDate":""},{"email":"momokayo@global.tencent.com","firstName":"momoka","lastName":"yo","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-05-19","product":"Maya","assignDate":"2026-01-21T16:41:15Z"},{"email":"naokisomeya@global.tencent.com","firstName":"NAOKI","lastName":"SOMEYA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"33","monthlyAverage":"10.8","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-07-15T07:55:17Z"},{"email":"ntadisetty@global.tencent.com","firstName":"NEELU CHAKRAVARTH","lastName":"TADISETTY","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"34","monthlyAverage":"11.1","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-04-07T20:22:26Z"},{"email":"osamusaito@global.tencent.com","firstName":"OSAMU","lastName":"SAITO","teamAlias":"IEGEXACT-20251125","userActivity":"active","daysInactive":"","daysUsed":"12","monthlyAverage":"3.9","lastAccessed":"2026-07-24","product":"Maya","assignDate":"2026-01-19T16:20:43Z"},{"email":"shikinzhang@global.tencent.com","firstName":"ZIXIN","lastName":"ZHANG","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-21","product":"Maya","assignDate":"2026-06-08T08:25:32Z"},{"email":"skunitomo@global.tencent.com","firstName":"SATOSHI","lastName":"KUNITOMO","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"49","monthlyAverage":"16.0","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-06-03T17:53:44Z"},{"email":"suaiguo@global.tencent.com","firstName":"suai","lastName":"guo","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.5","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-08-22T13:42:20Z"},{"email":"takamitaki@global.tencent.com","firstName":"TAKAMI","lastName":"TAKI","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.5","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-04-07T20:24:15Z"},{"email":"todera@global.tencent.com","firstName":"TSUYOSHI","lastName":"ODERA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"36","monthlyAverage":"11.8","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-04-03T16:17:44Z"},{"email":"tomoasakura@global.tencent.com","firstName":"TOMOKO","lastName":"ODA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"40","monthlyAverage":"13.1","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-05-13T00:39:35Z"},{"email":"tshogaki@global.tencent.com","firstName":"TAKAHIRO","lastName":"SHOGAKI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"15","monthlyAverage":"4.9","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2026-07-01T02:15:32Z"},{"email":"tsukasaaso@global.tencent.com","firstName":"TSUKASA","lastName":"ASO","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"18","monthlyAverage":"5.9","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-04-03T16:21:19Z"},{"email":"vividaniel@global.tencent.com","firstName":"VIVICA MASAKI","lastName":"DANIEL","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"36","monthlyAverage":"11.8","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2026-01-13T19:24:59Z"},{"email":"xaogangpang@global.tencent.com","firstName":"xiaogang","lastName":"pang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"30","monthlyAverage":"9.8","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-09-02T18:46:06Z"},{"email":"ysugiyama@global.tencent.com","firstName":"YUKI","lastName":"SUGIYAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"4","monthlyAverage":"1.3","lastAccessed":"2026-06-05","product":"Maya","assignDate":"2026-02-12T02:10:50Z"},{"email":"yukoyokoi@global.tencent.com","firstName":"YUKO","lastName":"YOKOI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"10","monthlyAverage":"3.3","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2026-07-01T02:15:54Z"}]},"2026-08-03":{"reportDate":"2026-08-03","teamKeyword":"exact","totalRecords":35,"uniqueUsers":32,"users":[{"email":"ahamajima@global.tencent.com","firstName":"AKIHIRO","lastName":"HAMAJIMA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"81","monthlyAverage":"26.5","lastAccessed":"2026-08-02","product":"Maya","assignDate":"2025-04-03T16:20:28Z"},{"email":"devilfishwu@global.tencent.com","firstName":"JINGZHANG","lastName":"WU","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"46","monthlyAverage":"15.0","lastAccessed":"2026-08-02","product":"Maya","assignDate":"2025-04-03T16:15:42Z"},{"email":"dsantos@global.tencent.com","firstName":"DANIEL","lastName":"SANTOS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"42","monthlyAverage":"13.7","lastAccessed":"2026-08-03","product":"Maya","assignDate":"2025-04-03T16:18:27Z"},{"email":"easonyxgong@global.tencent.com","firstName":"Eason","lastName":"Gong","teamAlias":"IEGEXACT-20251125","userActivity":"inactive","daysInactive":"98","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-27","product":"Maya","assignDate":"2025-12-12T19:15:42Z"},{"email":"egawa@global.tencent.com","firstName":"KOICHI","lastName":"EGAWA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"76","monthlyAverage":"24.8","lastAccessed":"2026-08-01","product":"Maya","assignDate":"2025-05-27T18:42:55Z"},{"email":"wbowser@global.tencent.com","firstName":"WILLIAM","lastName":"BOWSER","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"52","monthlyAverage":"17.0","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-02-12T02:10:33Z"},{"email":"hasegawa@global.tencent.com","firstName":"YUICHI","lastName":"HASEGAWA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"1","monthlyAverage":"0.3","lastAccessed":"2026-07-29","product":"Maya","assignDate":"2026-07-29T01:01:58Z"},{"email":"hiroshiito@global.tencent.com","firstName":"Hiroshi","lastName":"Ito","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"50","monthlyAverage":"16.3","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-03T08:53:21Z"},{"email":"hyagi@global.tencent.com","firstName":"HIROYUKI","lastName":"YAGI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"30","monthlyAverage":"9.8","lastAccessed":"2026-08-02","product":"Maya","assignDate":"2026-07-01T02:15:13Z"},{"email":"kdebolt@global.tencent.com","firstName":"KEVIN","lastName":"DEBOLT","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"101","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-24","product":"3ds Max","assignDate":"2025-05-27T18:53:26Z"},{"email":"kentamura@global.tencent.com","firstName":"KEN","lastName":"TAMURA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"38","monthlyAverage":"12.4","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-05-20T21:43:37Z"},{"email":"kimiharuido@global.tencent.com","firstName":"KIMIHARU","lastName":"IDO","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-10T04:03:19Z"},{"email":"koyaiwama@global.tencent.com","firstName":"KOYA","lastName":"IWAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"51","monthlyAverage":"16.7","lastAccessed":"2026-08-03","product":"Maya","assignDate":"2026-04-03T08:52:54Z"},{"email":"ksugiyama@global.tencent.com","firstName":"KAZUYA","lastName":"SUGIYAMA","teamAlias":"Exact Team - April 2025","userActivity":"inactive","daysInactive":"172","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-02-12","product":"3ds Max","assignDate":"2025-04-03T16:12:03Z"},{"email":"ksuzuki@global.tencent.com","firstName":"KENICHI","lastName":"SUZUKI","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"236","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2025-12-10","product":"Maya","assignDate":"2025-05-09T18:20:11Z"},{"email":"leslieren@global.tencent.com","firstName":"SHENG","lastName":"REN","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"24","monthlyAverage":"7.8","lastAccessed":"2026-05-28","product":"Maya","assignDate":""},{"email":"momokayo@global.tencent.com","firstName":"momoka","lastName":"yo","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"2","monthlyAverage":"0.7","lastAccessed":"2026-05-19","product":"Maya","assignDate":"2026-01-21T16:41:15Z"},{"email":"naokisomeya@global.tencent.com","firstName":"NAOKI","lastName":"SOMEYA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"33","monthlyAverage":"10.8","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-07-15T07:55:17Z"},{"email":"ntadisetty@global.tencent.com","firstName":"NEELU CHAKRAVARTH","lastName":"TADISETTY","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.4","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-04-07T20:22:26Z"},{"email":"osamusaito@global.tencent.com","firstName":"OSAMU","lastName":"SAITO","teamAlias":"IEGEXACT-20251125","userActivity":"active","daysInactive":"","daysUsed":"12","monthlyAverage":"3.9","lastAccessed":"2026-07-24","product":"Maya","assignDate":"2026-01-19T16:20:43Z"},{"email":"shikinzhang@global.tencent.com","firstName":"ZIXIN","lastName":"ZHANG","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-21","product":"Maya","assignDate":"2026-06-08T08:25:32Z"},{"email":"skunitomo@global.tencent.com","firstName":"SATOSHI","lastName":"KUNITOMO","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"49","monthlyAverage":"16.0","lastAccessed":"2026-08-03","product":"Maya","assignDate":"2025-06-03T17:53:44Z"},{"email":"suaiguo@global.tencent.com","firstName":"suai","lastName":"guo","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.5","lastAccessed":"2026-07-28","product":"Maya","assignDate":"2025-08-22T13:42:20Z"},{"email":"takamitaki@global.tencent.com","firstName":"TAKAMI","lastName":"TAKI","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"32","monthlyAverage":"10.5","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-04-07T20:24:15Z"},{"email":"todera@global.tencent.com","firstName":"TSUYOSHI","lastName":"ODERA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"36","monthlyAverage":"11.8","lastAccessed":"2026-08-03","product":"Maya","assignDate":"2025-04-03T16:17:44Z"},{"email":"tomoasakura@global.tencent.com","firstName":"TOMOKO","lastName":"ODA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"41","monthlyAverage":"13.4","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2025-05-13T00:39:35Z"},{"email":"tshogaki@global.tencent.com","firstName":"TAKAHIRO","lastName":"SHOGAKI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"18","monthlyAverage":"5.9","lastAccessed":"2026-08-02","product":"Maya","assignDate":"2026-07-01T02:15:32Z"},{"email":"tsukasaaso@global.tencent.com","firstName":"TSUKASA","lastName":"ASO","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"21","monthlyAverage":"6.9","lastAccessed":"2026-08-02","product":"Maya","assignDate":"2025-04-03T16:21:19Z"},{"email":"vividaniel@global.tencent.com","firstName":"VIVICA MASAKI","lastName":"DANIEL","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"37","monthlyAverage":"12.1","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-01-13T19:24:59Z"},{"email":"xaogangpang@global.tencent.com","firstName":"xiaogang","lastName":"pang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"30","monthlyAverage":"9.8","lastAccessed":"2026-07-30","product":"Maya","assignDate":"2025-09-02T18:46:06Z"},{"email":"ysugiyama@global.tencent.com","firstName":"YUKI","lastName":"SUGIYAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"4","monthlyAverage":"1.3","lastAccessed":"2026-06-05","product":"Maya","assignDate":"2026-02-12T02:10:50Z"},{"email":"yukoyokoi@global.tencent.com","firstName":"YUKO","lastName":"YOKOI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-31","product":"Maya","assignDate":"2026-07-01T02:15:54Z"}]},"2026-08-10":{"reportDate":"2026-08-10","teamKeyword":"exact","totalRecords":37,"uniqueUsers":32,"users":[{"email":"ahamajima@global.tencent.com","firstName":"AKIHIRO","lastName":"HAMAJIMA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"89","monthlyAverage":"29.1","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2025-04-03T16:20:28Z"},{"email":"devilfishwu@global.tencent.com","firstName":"JINGZHANG","lastName":"WU","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"49","monthlyAverage":"16.0","lastAccessed":"2026-08-06","product":"Maya","assignDate":"2025-04-03T16:15:42Z"},{"email":"dsantos@global.tencent.com","firstName":"DANIEL","lastName":"SANTOS","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"45","monthlyAverage":"14.7","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2025-04-03T16:18:27Z"},{"email":"easonyxgong@global.tencent.com","firstName":"Eason","lastName":"Gong","teamAlias":"IEGEXACT-20251125","userActivity":"inactive","daysInactive":"105","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-27","product":"Maya","assignDate":"2025-12-12T19:15:42Z"},{"email":"egawa@global.tencent.com","firstName":"KOICHI","lastName":"EGAWA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"81","monthlyAverage":"26.5","lastAccessed":"2026-08-09","product":"Maya","assignDate":"2025-05-27T18:42:55Z"},{"email":"wbowser@global.tencent.com","firstName":"WILLIAM","lastName":"BOWSER","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"58","monthlyAverage":"19.0","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2026-02-12T02:10:33Z"},{"email":"hasegawa@global.tencent.com","firstName":"YUICHI","lastName":"HASEGAWA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"6","monthlyAverage":"2.0","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2026-07-29T01:01:58Z"},{"email":"hiroshiito@global.tencent.com","firstName":"Hiroshi","lastName":"Ito","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"51","monthlyAverage":"16.7","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2026-04-03T08:53:21Z"},{"email":"hyagi@global.tencent.com","firstName":"HIROYUKI","lastName":"YAGI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"38","monthlyAverage":"12.4","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2026-07-01T02:15:13Z"},{"email":"kdebolt@global.tencent.com","firstName":"KEVIN","lastName":"DEBOLT","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"108","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-04-24","product":"3ds Max","assignDate":"2025-05-27T18:53:26Z"},{"email":"kentamura@global.tencent.com","firstName":"KEN","lastName":"TAMURA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"44","monthlyAverage":"14.4","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2025-05-20T21:43:37Z"},{"email":"kimiharuido@global.tencent.com","firstName":"KIMIHARU","lastName":"IDO","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"3","monthlyAverage":"1.0","lastAccessed":"2026-07-23","product":"Maya","assignDate":"2026-04-10T04:03:19Z"},{"email":"koyaiwama@global.tencent.com","firstName":"KOYA","lastName":"IWAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"54","monthlyAverage":"17.6","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2026-04-03T08:52:54Z"},{"email":"ksugiyama@global.tencent.com","firstName":"KAZUYA","lastName":"SUGIYAMA","teamAlias":"Exact Team - April 2025","userActivity":"inactive","daysInactive":"179","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2026-02-12","product":"3ds Max","assignDate":"2025-04-03T16:12:03Z"},{"email":"ksuzuki@global.tencent.com","firstName":"KENICHI","lastName":"SUZUKI","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"inactive","daysInactive":"243","daysUsed":"0","monthlyAverage":"0","lastAccessed":"2025-12-10","product":"Maya","assignDate":"2025-05-09T18:20:11Z"},{"email":"leslieren@global.tencent.com","firstName":"SHENG","lastName":"REN","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"17","monthlyAverage":"5.6","lastAccessed":"2026-05-28","product":"Maya","assignDate":""},{"email":"momokayo@global.tencent.com","firstName":"momoka","lastName":"yo","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"2","monthlyAverage":"0.7","lastAccessed":"2026-05-19","product":"Maya","assignDate":"2026-01-21T16:41:15Z"},{"email":"naokisomeya@global.tencent.com","firstName":"NAOKI","lastName":"SOMEYA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"38","monthlyAverage":"12.4","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2026-07-15T07:55:17Z"},{"email":"ntadisetty@global.tencent.com","firstName":"NEELU CHAKRAVARTH","lastName":"TADISETTY","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"38","monthlyAverage":"12.4","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2025-04-07T20:22:26Z"},{"email":"osamusaito@global.tencent.com","firstName":"OSAMU","lastName":"SAITO","teamAlias":"IEGEXACT-20251125","userActivity":"active","daysInactive":"","daysUsed":"13","monthlyAverage":"4.2","lastAccessed":"2026-08-06","product":"Maya","assignDate":"2026-01-19T16:20:43Z"},{"email":"shikinzhang@global.tencent.com","firstName":"ZIXIN","lastName":"ZHANG","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"11","monthlyAverage":"3.6","lastAccessed":"2026-07-21","product":"Maya","assignDate":"2026-06-08T08:25:32Z"},{"email":"skunitomo@global.tencent.com","firstName":"SATOSHI","lastName":"KUNITOMO","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"52","monthlyAverage":"17.0","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2025-06-03T17:53:44Z"},{"email":"suaiguo@global.tencent.com","firstName":"suai","lastName":"guo","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"38","monthlyAverage":"12.4","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2025-08-22T13:42:20Z"},{"email":"takamitaki@global.tencent.com","firstName":"TAKAMI","lastName":"TAKI","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"35","monthlyAverage":"11.4","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2025-04-07T20:24:15Z"},{"email":"todera@global.tencent.com","firstName":"TSUYOSHI","lastName":"ODERA","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"40","monthlyAverage":"13.1","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2025-04-03T16:17:44Z"},{"email":"tomoasakura@global.tencent.com","firstName":"TOMOKO","lastName":"ODA","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"43","monthlyAverage":"14.1","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2025-05-13T00:39:35Z"},{"email":"tshogaki@global.tencent.com","firstName":"TAKAHIRO","lastName":"SHOGAKI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"23","monthlyAverage":"7.5","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2026-07-01T02:15:32Z"},{"email":"tsukasaaso@global.tencent.com","firstName":"TSUKASA","lastName":"ASO","teamAlias":"Exact Team - April 2025","userActivity":"active","daysInactive":"","daysUsed":"25","monthlyAverage":"8.2","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2025-04-03T16:21:19Z"},{"email":"vividaniel@global.tencent.com","firstName":"VIVICA MASAKI","lastName":"DANIEL","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"42","monthlyAverage":"13.7","lastAccessed":"2026-08-10","product":"Maya","assignDate":"2026-01-13T19:24:59Z"},{"email":"xaogangpang@global.tencent.com","firstName":"xiaogang","lastName":"pang","teamAlias":"Exact Team & GoGame (2 Maya) - May 2025","userActivity":"active","daysInactive":"","daysUsed":"31","monthlyAverage":"10.1","lastAccessed":"2026-08-06","product":"Maya","assignDate":"2025-09-02T18:46:06Z"},{"email":"ysugiyama@global.tencent.com","firstName":"YUKI","lastName":"SUGIYAMA","teamAlias":"IEGEXACT-20260204","userActivity":"active","daysInactive":"","daysUsed":"4","monthlyAverage":"1.3","lastAccessed":"2026-06-05","product":"Maya","assignDate":"2026-02-12T02:10:50Z"},{"email":"yukoyokoi@global.tencent.com","firstName":"YUKO","lastName":"YOKOI","teamAlias":"Exact Team - 20260615","userActivity":"active","daysInactive":"","daysUsed":"16","monthlyAverage":"5.2","lastAccessed":"2026-08-07","product":"Maya","assignDate":"2026-07-01T02:15:54Z"}]}}');
+var DATES = Object.keys(ALL_DATA).sort().reverse();
+var TOKEN_DATA = null;
+var TOKEN_FILE = 'Token_2026-08-13.csv';
+
+function parseCSV(text){
+  var rows=[],cur='',q=false,row=[];
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+    else if(c==='"')q=true;
+    else if(c===','){row.push(cur);cur='';}
+    else if(c==='\n'||c==='\r'){if(cur!==''||row.length){row.push(cur);rows.push(row);row=[];cur='';}}
+    else cur+=c;
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row);}
+  return rows;
+}
+
+function loadTokenData(cb){
+  fetch(TOKEN_FILE+'?t='+Date.now(), { cache:'no-store' }).then(function(r){ if(!r.ok) throw new Error('Not found: '+TOKEN_FILE); return r.text(); }).then(function(text){
+    var grid=parseCSV(text);
+    if(grid.length<2){ cb(null); return; }
+    var headers=grid[0];
+    var idx={}; headers.forEach(function(h,i){ idx[h]=i; });
+    var rows=grid.slice(1).filter(function(r){ return r.length>1 && r.some(function(x){ return x.trim()!==''; }); });
+    var perUser={}, perProduct={}, records=[];
+    var total=0, tokenRows=0;
+    for(var j=0;j<rows.length;j++){
+      var r=rows[j];
+      var tok=parseFloat(r[idx.tokens_used]);
+      if(!tok||isNaN(tok)) continue;
+      tokenRows++; total+=tok;
+      var rec={
+        name:(r[idx.first_name]||'')+' '+(r[idx.last_name]||''),
+        email:r[idx.email]||'',
+        product:r[idx.offering_name]||'',
+        access:r[idx.access_option]||'',
+        assignDate:r[idx.assigned_date]||'',
+        activity:(r[idx.user_activity]||''),
+        daysUsed:r[idx.days_used]||'',
+        monthlyAvg:r[idx.monthly_average]||'',
+        tokens:tok,
+        lastAccess:r[idx.last_accessed]||''
+      };
+      records.push(rec);
+      var k=rec.email||rec.name;
+      perUser[k]=perUser[k]||{name:rec.name,email:rec.email,tokens:0};
+      perUser[k].tokens+=tok;
+      perProduct[rec.product]=perProduct[rec.product]||{product:rec.product,tokens:0,count:0,days:0};
+      perProduct[rec.product].tokens+=tok;
+      perProduct[rec.product].count++;
+      perProduct[rec.product].days+=parseFloat(rec.daysUsed)||0;
+    }
+    TOKEN_DATA={
+      source:TOKEN_FILE,
+      reportDate:TOKEN_FILE.replace(/^.*?(\d{4}-\d{2}-\d{2})\.csv$/,'$1')||'',
+      team:(rows[0]&&rows[0][idx.team_alias])||'',
+      tokenRows:tokenRows,
+      totalTokens:total,
+      users:Object.keys(perUser).map(function(k){return perUser[k];}).sort(function(a,b){return b.tokens-a.tokens;}),
+      products:Object.keys(perProduct).map(function(k){return perProduct[k];}).sort(function(a,b){return b.tokens-a.tokens;}),
+      records:records.sort(function(a,b){return b.tokens-a.tokens;})
+    };
+    cb(TOKEN_DATA);
+  }).catch(function(){
+    TOKEN_DATA=null;
+    cb(null);
+  });
+}
 var COLUMNS = [
   {key:'name', label:'Name', type:'text'},
   {key:'email', label:'Email', type:'text'},
@@ -455,73 +623,474 @@ function sortBy(ci){
 
 function loadDate(dateStr){
   if(!dateStr) return;
-  var url = 'Exact_autodesk_report_' + dateStr + '.json';
-  fetch(url).then(function(r){ if(!r.ok) throw new Error('Not found'); return r.json(); }).then(function(json){
-    var users = json.users;
-    data = users.map(function(u,i){
-      return {
-        _idx:i,
-        name:(u.firstName+' '+u.lastName).trim(),
-        email:u.email,
-        teamAlias:u.teamAlias,
-        userActivity:u.userActivity,
-        daysInactive:u.daysInactive||'0',
-        daysUsed:u.daysUsed||'0',
-        monthlyAverage:u.monthlyAverage||'0',
-        lastAccessed:u.lastAccessed||'',
-        assignDate:u.assignDate||'',
-        product:u.product
-      };
-    });
-    REPORT_DATE = dateStr;
-    var productSet = {};
-    var activeCount = 0;
-    for(var i=0;i<users.length;i++){
-      if(users[i].product) productSet[users[i].product]=true;
-      if(users[i].userActivity.toLowerCase()==='active') activeCount++;
-    }
-    document.getElementById('summaryCards').innerHTML =
-      '<div class="summary-card"><div class="label">Records</div><div class="value">'+json.totalRecords+'</div></div>' +
-      '<div class="summary-card"><div class="label">Users</div><div class="value">'+json.uniqueUsers+'</div></div>' +
-      '<div class="summary-card"><div class="label">Products</div><div class="value">'+Object.keys(productSet).length+'</div></div>' +
-      '<div class="summary-card"><div class="label">Active</div><div class="value">'+activeCount+'</div></div>' +
-      '<div class="summary-card"><div class="label">Inactive</div><div class="value">'+(json.uniqueUsers-activeCount)+'</div></div>';
-    document.getElementById('recCount').innerHTML='Showing <strong>'+json.totalRecords+'</strong> records';
-    buildHeader();
-    updateFlagged();
-  }).catch(function(e){
+  var json = ALL_DATA[dateStr];
+  if(!json){
     document.getElementById('summaryCards').innerHTML='<div class="summary-card"><div class="value" style="color:#dc2626">No data for '+dateStr+'</div></div>';
+    return;
+  }
+  var users = json.users;
+  data = users.map(function(u,i){
+    return {
+      _idx:i,
+      name:(u.firstName+' '+u.lastName).trim(),
+      email:u.email,
+      teamAlias:u.teamAlias,
+      userActivity:u.userActivity,
+      daysInactive:u.daysInactive||'0',
+      daysUsed:u.daysUsed||'0',
+      monthlyAverage:u.monthlyAverage||'0',
+      lastAccessed:u.lastAccessed||'',
+      assignDate:u.assignDate||'',
+      product:u.product
+    };
   });
+  REPORT_DATE = dateStr;
+  var productSet = {};
+  var activeCount = 0;
+  for(var i=0;i<users.length;i++){
+    if(users[i].product) productSet[users[i].product]=true;
+    if(users[i].userActivity.toLowerCase()==='active') activeCount++;
+  }
+  document.getElementById('summaryCards').innerHTML =
+    '<div class="summary-card"><div class="label">Records</div><div class="value">'+json.totalRecords+'</div></div>' +
+    '<div class="summary-card"><div class="label">Users</div><div class="value">'+json.uniqueUsers+'</div></div>' +
+    '<div class="summary-card"><div class="label">Products</div><div class="value">'+Object.keys(productSet).length+'</div></div>' +
+    '<div class="summary-card"><div class="label">Active</div><div class="value">'+activeCount+'</div></div>' +
+    '<div class="summary-card"><div class="label">Inactive</div><div class="value">'+(json.uniqueUsers-activeCount)+'</div></div>';
+  document.getElementById('recCount').innerHTML='Showing <strong>'+json.totalRecords+'</strong> records';
+  buildHeader();
+  updateFlagged();
 }
 
 function scrollToNote(id){document.getElementById(id||'recalcNote').scrollIntoView({behavior:'smooth'})}
 
 function initDates(){
   var sel = document.getElementById('reportDate');
-  fetch('dates.json').then(function(r){
-    if(!r.ok) throw new Error('Not found');
-    return r.json();
-  }).then(function(dates){
-    var found = Array.isArray(dates) ? dates.slice() : [];
-    found.sort().reverse();
-    found.forEach(function(d){
-      DATES.push(d);
-      var opt = document.createElement('option');
-      opt.value = d; opt.textContent = d;
-      sel.appendChild(opt);
-    });
-    if(found.length === 0){
-      document.getElementById('summaryCards').innerHTML = '<div class="summary-card"><div class="value" style="color:#dc2626">No data files found</div></div>';
+  var found = DATES.slice();
+  found.sort().reverse();
+  found.forEach(function(d){
+    var opt = document.createElement('option');
+    opt.value = d; opt.textContent = d;
+    sel.appendChild(opt);
+  });
+  if(found.length === 0){
+    document.getElementById('summaryCards').innerHTML = '<div class="summary-card"><div class="value" style="color:#dc2626">No data files found</div></div>';
+    return;
+  }
+  sel.value = found[0];
+  loadDate(found[0]);
+}
+
+function switchTab(name){
+  document.getElementById('tab-user').className='tab'+(name==='user'?' active':'');
+  document.getElementById('tab-token').className='tab'+(name==='token'?' active':'');
+  document.getElementById('page-user').className='tab-content'+(name==='user'?' active':'');
+  document.getElementById('page-token').className='tab-content'+(name==='token'?' active':'');
+  if(name==='token') renderToken();
+  try { localStorage.setItem('autodesk_active_tab', name); } catch(e){}
+}
+
+var TCOLUMNS = [
+  {key:'name', label:'Name', type:'text'},
+  {key:'email', label:'Email', type:'text'},
+  {key:'product', label:'Product', type:'text'},
+  {key:'daysUsed', label:'Days Used', type:'number'},
+  {key:'monthlyAvg', label:'Monthly Avg', type:'number'},
+  {key:'tokens', label:'Tokens', type:'number'},
+  {key:'lastAccess', label:'Last Access', type:'date'},
+  {key:'assignDate', label:'Assign Date', type:'date'},
+];
+var tSortCol=5, tSortDir=-1;
+
+function tokenGetVal(r,col){
+  var v=r[col.key];
+  if(col.type==='number') return parseFloat(v)||0;
+  if(col.type==='date') return v||'';
+  return v;
+}
+
+function tokenCompare(a,b,col,dir){
+  var va=tokenGetVal(a,col), vb=tokenGetVal(b,col);
+  if(col.type==='number') return dir*(va-vb);
+  if(col.type==='date'){
+    if(!va&&!vb) return 0;
+    if(!va) return 1;
+    if(!vb) return -1;
+    return dir*(new Date(va)-new Date(vb));
+  }
+  va=String(va).toLowerCase(); vb=String(vb).toLowerCase();
+  if(va<vb) return -dir;
+  if(va>vb) return dir;
+  return 0;
+}
+
+function tokenApply(){
+  var filters=[];
+  TCOLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('tf_'+ci);
+    if(!el) return;
+    if(col.type==='text'){
+      var v=el.value;
+      if(v) filters.push({col:col, test:function(r){return String(tokenGetVal(r,col)).toLowerCase()===v.toLowerCase();}});
+    }else if(col.type==='number'){
+      var opEl=document.getElementById('tfop_'+ci);
+      var op=opEl?opEl.value:'';
+      var num=parseFloat(el.value);
+      if(op&&!isNaN(num)) filters.push({col:col, test:function(r){
+        var val=tokenGetVal(r,col);
+        if(op==='>=') return val>=num;
+        if(op==='<=') return val<=num;
+        if(op==='>') return val>num;
+        if(op==='<') return val<num;
+        if(op==='=') return val===num;
+        return true;
+      }});
+    }else if(col.type==='date'){
+      var modeEl=document.getElementById('tfdm_'+ci);
+      var mode=modeEl?modeEl.value:'';
+      var dateVal=el.value;
+      if(mode&&dateVal){
+        var cmp=new Date(dateVal).getTime();
+        filters.push({col:col, test:function(r){
+          var d=tokenGetVal(r,col);
+          if(!d) return false;
+          var t=new Date(d).getTime();
+          if(mode==='before') return t<=cmp+86400000;
+          if(mode==='after') return t>=cmp;
+          return true;
+        }});
+      }
+    }
+  });
+  var rows=TOKEN_DATA.records.filter(function(r){return filters.every(function(f){return f.test(r);});});
+  if(tSortCol!==null){
+    var col=TCOLUMNS[tSortCol];
+    rows.sort(function(a,b){return tokenCompare(a,b,col,tSortDir);});
+  }
+  tokenRender(rows);
+  document.getElementById('tokenRecCount').innerHTML='Showing <strong>'+rows.length+'</strong> records';
+}
+
+function tokenRender(rows){
+  var maxD=TOKEN_DATA.totalTokens||1;
+  var html=rows.map(function(r){
+    var w=(r.tokens/maxD)*100;
+    var ad=r.assignDate?(r.assignDate.split('T')[0]||'-'):'-';
+    var avgCell=esc(r.monthlyAvg||'0');
+    var isRecalc=false;
+    if(r.assignDate && TOKEN_DATA.reportDate){
+      var adt=new Date(r.assignDate);
+      var rdt=new Date(TOKEN_DATA.reportDate);
+      var months=(rdt-adt)/(1000*60*60*24*30);
+      if(months<3&&months>0){
+        isRecalc=true;
+        var recalcAvg=tokenAdjAvg(r);
+        avgCell='<span class="cell-highlight-avg">'+esc(recalcAvg.toFixed(1))+' ('+esc(r.monthlyAvg||'0')+') <span class="info-icon" onclick="tokenScrollNote()" style="cursor:pointer">i</span></span>';
+      }
+    }
+    var adCell = isRecalc?'<span class="cell-assign-recalc">'+esc(ad)+' <span class="info-icon" onclick="tokenScrollNote()" style="cursor:pointer">i</span></span>':esc(ad);
+    return '<tr><td>'+esc(r.name)+'</td><td>'+esc(r.email)+'</td><td>'+esc(r.product)+'</td><td>'+esc(r.daysUsed||'0')+'</td><td>'+avgCell+'</td><td><div class="bar-cell"><div class="token-bar" style="width:'+w.toFixed(1)+'%"></div>'+r.tokens+'</div></td><td>'+esc(r.lastAccess||'-')+'</td><td>'+adCell+'</td></tr>';
+  }).join('');
+  html+='<tr class="token-total"><td colspan="6">Total ('+rows.length+' records)</td><td>'+rows.reduce(function(s,r){return s+r.tokens;},0)+'</td><td></td></tr>';
+  document.getElementById('tokenTableBody').innerHTML=html;
+}
+
+function tokenScrollNote(){
+  var note=document.getElementById('tokenRecalcNote');
+  if(note) note.style.display='';
+}
+
+function tokenBuildHeader(){
+  var thead=document.getElementById('tokenTableHead');
+  var h='<tr>';
+  TCOLUMNS.forEach(function(col,ci){
+    var cls='';
+    if(tSortCol===ci) cls=tSortDir>0?' sorted-asc':' sorted-desc';
+    h+='<th class="'+cls+'" onclick="tokenSortBy('+ci+')"><span>'+col.label+'</span><span class="sort-icon"> \u25b2\u25bc</span></th>';
+  });
+  h+='</tr><tr class="filter-row">';
+  TCOLUMNS.forEach(function(col,ci){
+    if(col.type==='text'){
+      var vals={};
+      TOKEN_DATA.records.forEach(function(r){var v=tokenGetVal(r,col); if(v) vals[v]=true;});
+      var sorted=Object.keys(vals).sort();
+      var opts='<option value="">All</option>';
+      for(var i=0;i<sorted.length;i++) opts+='<option value="'+esc(sorted[i])+'">'+esc(sorted[i])+'</option>';
+      h+='<th><select id="tf_'+ci+'" onchange="tokenApply()">'+opts+'</select></th>';
+    }else if(col.type==='number'){
+      h+='<th><div class="cmp-row"><select id="tfop_'+ci+'" onchange="tokenApply()"><option value="">-</option><option value=">=">\u2265</option><option value="<=">\u2264</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option></select><input id="tf_'+ci+'" type="number" oninput="tokenApply()" placeholder="value"></div></th>';
+    }else if(col.type==='date'){
+      h+='<th><div class="date-row"><select id="tfdm_'+ci+'" onchange="tokenApply()"><option value="">-</option><option value="before">before</option><option value="after">after</option></select><input id="tf_'+ci+'" type="text" placeholder="YYYY-MM-DD" oninput="tokenApply()"></div></th>';
+    }
+  });
+  h+='</tr>';
+  thead.innerHTML=h;
+}
+
+function tokenSortBy(ci){
+  if(tSortCol===ci) tSortDir*=-1;
+  else{tSortCol=ci; tSortDir=-1;}
+  tokenApply();
+}
+
+function tokenSortTokens(){
+  tokenClearFilterInputs();
+  tSortCol=5; tSortDir=-1;
+  tokenApply();
+}
+
+function tokenClearFilterInputs(){
+  TCOLUMNS.forEach(function(col,ci){
+    var el=document.getElementById('tf_'+ci);
+    if(el){ if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=''; }
+    var opEl=document.getElementById('tfop_'+ci);
+    if(opEl) opEl.selectedIndex=0;
+    var dmEl=document.getElementById('tfdm_'+ci);
+    if(dmEl) dmEl.selectedIndex=0;
+  });
+  var ths=document.querySelectorAll('#tokenTableHead th');
+  for(var i=0;i<ths.length;i++) ths[i].className='';
+}
+
+function tokenClearFilters(){
+  tokenClearFilterInputs();
+  tSortCol=5; tSortDir=-1;
+  tokenApply();
+}
+
+function toggleTokenDetails(){
+  var toggle=document.getElementById('tokenDetailToggle');
+  var content=document.getElementById('tokenDetailContent');
+  var collapsed=toggle.classList.toggle('collapsed');
+  content.classList.toggle('collapsed');
+  if(!collapsed) tokenApply();
+}
+
+function renderToken(){
+  TOKEN_DATA=null;
+  loadTokenData(function(t){
+    if(!t||!t.totalTokens){
+      document.getElementById('tokenSummaryCards').innerHTML='<div class="summary-card"><div class="value" style="color:#dc2626">No token data</div></div>';
       return;
     }
-    sel.value = found[0];
-    loadDate(found[0]);
-  }).catch(function(){
-    document.getElementById('summaryCards').innerHTML = '<div class="summary-card"><div class="value" style="color:#dc2626">dates.json not found</div></div>';
+    document.getElementById('tokenTeam').textContent=t.source||'';
+    renderTokenSummary();
+    renderTokenHighlights();
+
+    tokenBuildHeader();
+    tokenApply();
   });
 }
 
+var tokenActiveProduct=null;
+
+function renderTokenHighlights(){
+  if(!TOKEN_DATA) return;
+  var hl='';
+  TOKEN_DATA.products.forEach(function(p){
+    var isActive = tokenActiveProduct===p.product;
+    var cardStyle = isActive?';border-color:#2563eb;box-shadow:0 0 0 1px #2563eb':'';
+    hl+='<div class="flagged-card" onclick="tokenFilterProduct(\''+esc(p.product.replace(/'/g,'\\\''))+'\')" style="cursor:pointer'+cardStyle+'"><span class="card-dot" style="background:#2563eb"></span><div class="card-info"><div class="card-id">'+esc(p.product)+'</div><div class="card-sub">'+p.count+' records · '+p.days+' days used</div><div class="card-sub" style="font-weight:700;color:#2563eb">'+p.tokens+' tokens used</div></div></div>';
+  });
+  document.getElementById('tokenHighlights').innerHTML=hl;
+}
+
+function tokenFilterProduct(prod){
+  var toggle=document.getElementById('tokenDetailToggle');
+  var content=document.getElementById('tokenDetailContent');
+  var el=document.getElementById('tf_2');
+  if(tokenActiveProduct===prod){
+    tokenActiveProduct=null;
+    if(el){ el.value=''; }
+    if(!toggle.classList.contains('collapsed')){
+      toggle.classList.add('collapsed');
+      content.classList.add('collapsed');
+    }
+    renderTokenHighlights();
+    tokenApply();
+    showProductUsers(prod);
+    return;
+  }
+  tokenActiveProduct=prod;
+  if(el){ el.value=prod; }
+  if(toggle.classList.contains('collapsed')){
+    toggle.classList.remove('collapsed');
+    content.classList.remove('collapsed');
+  }
+  renderTokenHighlights();
+  tokenApply();
+}
+
+function tokenAdjAvg(rec){
+  var avg=parseFloat(rec.monthlyAvg)||0;
+  var days=parseFloat(rec.daysUsed)||0;
+  if(rec.assignDate && TOKEN_DATA && TOKEN_DATA.reportDate){
+    var ad=new Date(rec.assignDate);
+    var rd=new Date(TOKEN_DATA.reportDate);
+    if(isNaN(ad)||isNaN(rd)) return avg;
+    var months=(rd-ad)/(1000*60*60*24*30);
+    if(months<3 && months>0) return days/months;
+  }
+  return avg;
+}
+
+function showProductUsers(prod){
+  if(!TOKEN_DATA) return;
+  var users={};
+  TOKEN_DATA.records.forEach(function(r){
+    if(r.product!==prod) return;
+    var key=r.name||r.email;
+    if(!users[key]) users[key]={name:r.name||r.email, email:r.email, days:0, avg:0, recalc:false, last:''};
+    users[key].days+=parseFloat(r.daysUsed)||0;
+    if(r.lastAccess && r.lastAccess>users[key].last) users[key].last=r.lastAccess;
+    var a=tokenAdjAvg(r);
+    var recalc=(r.assignDate && TOKEN_DATA.reportDate);
+    if(recalc){
+      var ad=new Date(r.assignDate);
+      var rd=new Date(TOKEN_DATA.reportDate);
+      var months=(rd-ad)/(1000*60*60*24*30);
+      if(months<3 && months>0) users[key].recalc=true;
+    }
+    users[key].avg+=a;
+  });
+  var list=Object.keys(users).sort(function(a,b){return users[b].days-users[a].days;});
+  var html='';
+  list.forEach(function(k){
+    var u=users[k];
+    var avgTxt=u.avg.toFixed(1)+'/mo';
+    var since='-';
+    if(u.last && TOKEN_DATA.reportDate){
+      var lastD=new Date(u.last);
+      var repD=new Date(TOKEN_DATA.reportDate);
+      if(!isNaN(lastD)&&!isNaN(repD)) since=Math.max(0,Math.round((repD-lastD)/86400000))+' d';
+    }
+    html+='<div class="modal-user"><span class="name">'+esc(u.name)+'</span><span class="days">'+u.days+' days · '+avgTxt+' · '+since+'</span></div>';
+  });
+  if(!html) html='<div style="color:#94a3b8;font-size:13px">No users for this product.</div>';
+  document.getElementById('tokenModalTitle').textContent=prod+' — Users & Days';
+  document.getElementById('tokenModalBody').innerHTML=html;
+  document.getElementById('tokenModal').classList.add('show');
+}
+
+function tokenModalClose(){
+  document.getElementById('tokenModal').classList.remove('show');
+}
+
+var PROC_URL = 'api/procurement';
+var procData = [];
+
+function procLoad(){
+  fetch(PROC_URL).then(function(r){ return r.json(); }).then(function(d){
+    procData = Array.isArray(d)? d : [];
+    procRender();
+  }).catch(function(){ procData=[]; procRender(); });
+}
+
+function procSave(cb){
+  fetch(PROC_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(procData) })
+    .then(function(){ if(cb) cb(); })
+    .catch(function(){ if(cb) cb(); });
+}
+
+function renderTokenSummary(){
+  var el=document.getElementById('tokenSummaryCards');
+  if(!el) return;
+  if(!TOKEN_DATA||!TOKEN_DATA.totalTokens){
+    el.innerHTML='<div class="summary-card"><div class="value" style="color:#dc2626">No token data</div></div>';
+    return;
+  }
+  var t=TOKEN_DATA;
+  var sum=procData.reduce(function(s,r){ return s+(parseFloat(r.tokens)||0); },0);
+  var pct = sum>0 ? Math.min(100,(t.totalTokens/sum)*100) : 0;
+  var remains = sum-t.totalTokens;
+  var rpct = sum>0 ? Math.min(100,(remains/sum)*100) : 0;
+  el.innerHTML =
+    '<div class="summary-card"><div class="label">Token Records</div><div class="value">'+t.tokenRows+'</div></div>' +
+    '<div class="summary-card"><div class="label">Users</div><div class="value">'+t.users.length+'</div></div>' +
+    '<div class="summary-card"><div class="label">Products</div><div class="value">'+t.products.length+'</div></div>' +
+    '<div class="summary-card" style="position:relative;background:linear-gradient(90deg, rgba(37,99,235,.14) '+pct.toFixed(1)+'%, rgba(255,255,255,0) '+pct.toFixed(1)+'%);overflow:hidden"><div class="label">Tokens Used</div><div class="value">'+t.totalTokens+' <span style="font-size:12px;color:#64748b;font-weight:600">'+pct.toFixed(1)+'%</span></div></div>' +
+    '<div class="summary-card" style="position:relative;background:linear-gradient(90deg, rgba(22,163,74,.14) '+rpct.toFixed(1)+'%, rgba(255,255,255,0) '+rpct.toFixed(1)+'%);overflow:hidden"><div class="label">Token Remains</div><div class="value">'+remains+' <span style="font-size:12px;color:#64748b;font-weight:600">'+rpct.toFixed(1)+'%</span></div></div>';
+}
+
+function procRender(){
+  var sum=procData.reduce(function(s,r){ return s+(parseFloat(r.tokens)||0); },0);
+  document.getElementById('procSummary').innerHTML =
+    '<div class="summary-card"><div class="label">Records</div><div class="value">'+procData.length+'</div></div>' +
+    '<div class="summary-card"><div class="label">Tokens Purchased</div><div class="value">'+sum+'</div></div>';
+  renderTokenSummary();
+  var html=procData.map(function(r,i){
+    return '<tr>'+
+      '<td><input class="proc-input" id="pc_'+i+'_0" type="number" value="'+esc(r.tokens||'')+'" onchange="procSet('+i+',0)" style="width:100px"></td>'+
+      '<td><input class="proc-input" id="pc_'+i+'_1" type="date" value="'+esc(r.purchase||'')+'" onchange="procSet('+i+',1)"></td>'+
+      '<td><input class="proc-input" id="pc_'+i+'_2" type="date" value="'+esc(r.expiry||'')+'" onchange="procSet('+i+',2)"></td>'+
+      '<td><input class="proc-input" id="pc_'+i+'_3" value="'+esc(r.notes||'')+'" onchange="procSet('+i+',3)" style="width:200px"></td>'+
+      '<td><button class="btn btn-outline" onclick="procRemove('+i+')" style="padding:3px 10px">&#10005;</button></td>'+
+      '</tr>';
+  }).join('');
+  if(html==='') html='<tr><td colspan="5" style="color:#94a3b8;text-align:center">No procurement records yet. Click "+ Add Record" to start.</td></tr>';
+  document.getElementById('procBody').innerHTML=html;
+}
+
+function procAddOneYear(dateStr){
+  if(!dateStr) return '';
+  var d=new Date(dateStr+'T00:00:00');
+  if(isNaN(d)) return '';
+  d.setFullYear(d.getFullYear()+1);
+  var m=('0'+(d.getMonth()+1)).slice(-2);
+  var dd=('0'+d.getDate()).slice(-2);
+  return d.getFullYear()+'-'+m+'-'+dd;
+}
+
+function procSet(i,k){
+  var el=document.getElementById('pc_'+i+'_'+k);
+  var fields=['tokens','purchase','expiry','notes'];
+  procData[i][fields[k]]=el.value;
+  if(fields[k]==='purchase' && !procData[i].expiry){
+    procData[i].expiry=procAddOneYear(el.value);
+  }
+  procSave();
+  procRender();
+}
+
+function procAdd(){
+  procData.push({tokens:'',purchase:'',expiry:'',notes:''});
+  procSave();
+  procRender();
+}
+
+function procRemove(i){
+  var ans=prompt('Type "delete" to confirm removing this record:');
+  if(ans===null||ans.toLowerCase()!=='delete') return;
+  procData.splice(i,1);
+  procSave();
+  procRender();
+}
+
+function procClear(){
+  var ans=prompt('Type "delete" to confirm clearing ALL records:');
+  if(ans===null||ans.toLowerCase()!=='delete') return;
+  procData=[];
+  procSave();
+  procRender();
+}
+
+function toggleProc(){
+  var toggle=document.getElementById('procToggle');
+  var content=document.getElementById('procContent');
+  var collapsed=toggle.classList.toggle('collapsed');
+  content.classList.toggle('collapsed');
+  if(!collapsed) procRender();
+}
+
+procLoad();
+
 initDates();
+
+(function(){
+  var saved='';
+  try { saved=localStorage.getItem('autodesk_active_tab')||'user'; } catch(e){ saved='user'; }
+  switchTab(saved);
+})();
 </script>
 </body>
 </html>

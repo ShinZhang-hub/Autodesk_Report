@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodesk 使用报告测试页</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1e293b;padding:24px}
+.container{max-width:1440px;margin:0 auto}
+h1{font-size:20px;font-weight:700;color:#0f172a}
+.meta{color:#64748b;margin:8px 0 20px;font-size:13px}
+.upload-box{background:#fff;border:2px dashed #cbd5e1;border-radius:10px;padding:28px;text-align:center;margin-bottom:24px;transition:all .2s}
+.upload-box.drag{border-color:#6366f1;background:#eef2ff}
+.upload-box p{color:#64748b;font-size:13px;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;font-size:13px;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:#6366f1;color:#fff}
+.btn:hover{background:#4f46e5}
+.summary{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.summary-card{background:#fff;border-radius:10px;padding:16px 24px;box-shadow:0 1px 2px rgba(0,0,0,.06);min-width:130px;border:1px solid #f1f5f9}
+.summary-card .label{font-size:11px;color:#94a3b8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.summary-card .value{font-size:26px;font-weight:700;color:#0f172a;line-height:1.2}
+section{margin-bottom:32px}
+section h2{font-size:16px;font-weight:600;color:#0f172a;margin-bottom:4px}
+.section-sub{font-size:12px;color:#94a3b8;margin-bottom:14px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #f1f5f9}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{background:#f8fafc;color:#475569;padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;border-bottom:2px solid #e2e8f0}
+td{padding:9px 12px;border-bottom:1px solid #f1f5f9;font-size:12px;color:#334155}
+tr:nth-child(even) td{background:#fafbfc}
+tr:hover td{background:#f1f5f9}
+.badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600}
+.badge-active{background:#d1fae5;color:#065f46}
+.badge-inactive{background:#fef2f2;color:#991b1b}
+.badge-token{background:#ede9fe;color:#5b21b6}
+.badge-flex{background:#dbeafe;color:#1e40af}
+.badge-sub{background:#fef9c3;color:#854d0e}
+.token-highlight td:last-child{font-weight:700;color:#7c3aed}
+.token-total{background:#5b21b6!important;color:#fff!important;font-weight:700}
+.token-total td{background:inherit!important;color:#fff!important;font-weight:700}
+.token-bar{display:inline-block;height:8px;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#a78bfa);vertical-align:middle;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Autodesk 使用报告测试页</h1>
+<div class="meta">本地测试页面 | 数据来源: all/user_details.csv | Token 数据与一般软件使用分开总结</div>
+
+<div class="upload-box" id="dropZone">
+  <button class="btn" onclick="document.getElementById('fileInput').click()">选择 user_details.csv</button>
+  <input type="file" id="fileInput" accept=".csv" style="display:none" onchange="handleFile(this.files[0])">
+  <p>或将 all/user_details.csv 拖拽到此处</p>
+</div>
+
+<div id="content" style="display:none">
+  <div class="summary" id="summaryCards"></div>
+
+  <section>
+    <h2>一、一般软件使用报告</h2>
+    <div class="section-sub">软件使用情况 (不含 Token 维度)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>姓名</th><th>邮箱</th><th>产品</th><th>权限类型</th><th>状态</th>
+          <th>使用天数</th><th>月均使用</th><th>最近访问</th>
+        </tr></thead>
+        <tbody id="usageBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>二、Token 使用总结</h2>
+    <div class="section-sub">仅统计有 token 消耗的记录 (tokens_used &gt; 0), 与一般软件使用报告区分</div>
+    <div class="summary" id="tokenSummary"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>姓名</th><th>邮箱</th><th>产品</th><th>权限类型</th>
+          <th>使用天数</th><th>月均使用</th><th>Token 消耗</th>
+        </tr></thead>
+        <tbody id="tokenBody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+</div>
+
+<script>
+var dropZone=document.getElementById('dropZone');
+['dragenter','dragover'].forEach(function(ev){dropZone.addEventListener(ev,function(e){e.preventDefault();dropZone.classList.add('drag');});});
+['dragleave','drop'].forEach(function(ev){dropZone.addEventListener(ev,function(e){e.preventDefault();dropZone.classList.remove('drag');});});
+dropZone.addEventListener('drop',function(e){var f=e.dataTransfer.files[0];if(f)handleFile(f);});
+
+function parseCSV(text){
+  var rows=[],cur='',q=false,row=[];
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+    else if(c==='"')q=true;
+    else if(c===','){row.push(cur);cur='';}
+    else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';}
+    else if(c==='\r'){}
+    else cur+=c;
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row);}
+  return rows;
+}
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function num(s){var n=parseFloat(s);return isNaN(n)?0:n;}
+
+function handleFile(file){
+  var reader=new FileReader();
+  reader.onload=function(){
+    var grid=parseCSV(reader.result);
+    if(grid.length<2){alert('CSV 内容为空');return;}
+    var headers=grid[0].map(function(h){return h.trim();});
+    var rows=grid.slice(1).filter(function(r){return r.length>1&&r.some(function(x){return x.trim()!=='';});});
+    var idx={};
+    headers.forEach(function(h,i){idx[h]=i;});
+    render(rows,idx);
+  };
+  reader.readAsText(file);
+}
+
+function render(rows,idx){
+  var records=rows.map(function(r){
+    return {
+      name:(r[idx.first_name]||'')+' '+(r[idx.last_name]||''),
+      email:r[idx.email]||'',
+      product:r[idx.offering_name]||'',
+      access:r[idx.access_option]||'',
+      activity:(r[idx.user_activity]||'').toLowerCase()==='active'?'Active':'Inactive',
+      daysUsed:num(r[idx.days_used]),
+      monthlyAvg:num(r[idx.monthly_average]),
+      tokens:num(r[idx.tokens_used]),
+      lastAccess:r[idx.last_accessed]||'-'
+    };
+  });
+
+  var users={},products={},active=0;
+  records.forEach(function(r){
+    var k=r.email||r.name;
+    users[k]=true;
+    if(r.product)products[r.product]=true;
+    if(r.activity==='Active')active++;
+  });
+
+  document.getElementById('summaryCards').innerHTML=
+    '<div class="summary-card"><div class="label">记录数</div><div class="value">'+records.length+'</div></div>'+
+    '<div class="summary-card"><div class="label">用户数</div><div class="value">'+Object.keys(users).length+'</div></div>'+
+    '<div class="summary-card"><div class="label">产品数</div><div class="value">'+Object.keys(products).length+'</div></div>'+
+    '<div class="summary-card"><div class="label">Active</div><div class="value">'+active+'</div></div>'+
+    '<div class="summary-card"><div class="label">Inactive</div><div class="value">'+(Object.keys(users).length-active)+'</div></div>';
+
+  // 一般软件使用
+  document.getElementById('usageBody').innerHTML=records.map(function(r){
+    var ab=r.activity==='Active'?'<span class="badge badge-active">Active</span>':'<span class="badge badge-inactive">Inactive</span>';
+    var acc=r.access==='Flex'?'<span class="badge badge-flex">Flex</span>':(r.access==='Subscription'?'<span class="badge badge-sub">Subscription</span>':esc(r.access));
+    return '<tr><td>'+esc(r.name)+'</td><td>'+esc(r.email)+'</td><td>'+esc(r.product)+'</td><td>'+acc+'</td><td>'+ab+'</td><td>'+r.daysUsed+'</td><td>'+r.monthlyAvg.toFixed(1)+'</td><td>'+esc(r.lastAccess)+'</td></tr>';
+  }).join('');
+
+  // Token 部分
+  var tokenRows=records.filter(function(r){return r.tokens>0;});
+  var totalTokens=0,perUser={};
+  tokenRows.forEach(function(r){totalTokens+=r.tokens;perUser[r.email]=(perUser[r.email]||0)+r.tokens;});
+  var maxTok=tokenRows.length?Math.max.apply(null,tokenRows.map(function(r){return r.tokens;})):1;
+
+  document.getElementById('tokenSummary').innerHTML=
+    '<div class="summary-card"><div class="label">Token 记录数</div><div class="value">'+tokenRows.length+'</div></div>'+
+    '<div class="summary-card"><div class="label">消耗 Token 用户数</div><div class="value">'+Object.keys(perUser).length+'</div></div>'+
+    '<div class="summary-card"><div class="label">Token 总量</div><div class="value">'+totalTokens+'</div></div>';
+
+  var sorted=tokenRows.slice().sort(function(a,b){return b.tokens-a.tokens;});
+  var html=sorted.map(function(r){
+    var acc=r.access==='Flex'?'<span class="badge badge-flex">Flex</span>':(r.access==='Subscription'?'<span class="badge badge-sub">Subscription</span>':esc(r.access));
+    var w=(r.tokens/maxTok)*100;
+    return '<tr class="token-highlight"><td>'+esc(r.name)+'</td><td>'+esc(r.email)+'</td><td>'+esc(r.product)+'</td><td>'+acc+'</td><td>'+r.daysUsed+'</td><td>'+r.monthlyAvg.toFixed(1)+'</td><td><span class="token-bar" style="width:'+w.toFixed(1)+'%"></span>'+r.tokens.toFixed(1)+'</td></tr>';
+  }).join('');
+
+  var names=Object.keys(perUser).sort(function(a,b){return perUser[b]-perUser[a];});
+  var totalCell='<tr class="token-total"><td colspan="4">合计</td><td>'+tokenRows.reduce(function(s,r){return s+r.daysUsed;},0)+'</td><td>'+tokenRows.reduce(function(s,r){return s+r.monthlyAvg;},0).toFixed(1)+'</td><td>'+totalTokens.toFixed(1)+'</td></tr>';
+  html+=totalCell;
+  document.getElementById('tokenBody').innerHTML=html;
+
+  document.getElementById('content').style.display='block';
+}
+</script>
+</body>
+</html>
